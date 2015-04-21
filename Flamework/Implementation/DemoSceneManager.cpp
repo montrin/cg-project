@@ -90,6 +90,7 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     _modelMatrixStack.push(vmml::mat4f::IDENTITY);
 
     loadModel("quad.obj", false, false);
+    loadModel("guy.obj", true, true);
 //    loadSound("test.mp3");
 }
 
@@ -143,45 +144,30 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
 
 void DemoSceneManager::draw(double deltaT)
 {
-
-
+    _time += deltaT;
+    float angle = _time * .1;   // .1 radians per second
+    
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     
     glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
     
     Gyro *gyro = Gyro::getInstance();
     gyro->read();
     
-    Model::GroupMap &groups = getModel("quad")->getGroups();
-    for (auto i = groups.begin(); i != groups.end(); ++i)
-    {
-        Geometry &geometry = i->second;
-        MaterialPtr material = geometry.getMaterial();
-        ShaderPtr shader = material->getShader();
-        if (shader)
-        {
-            vmml::mat4f translation = vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0));
-            vmml::mat4f scaling = vmml::create_scaling(vmml::vec3f(0.25f));
-            
-            vmml::mat3f rotation = vmml::create_rotation(gyro->getRoll() * -M_PI_F, vmml::vec3f::UNIT_Y) *
-            vmml::create_rotation(gyro->getPitch() * -M_PI_F, vmml::vec3f::UNIT_X);
-            vmml::vec3f eyePos(0, 0, 0.25);
-            vmml::vec3f eyeUp = vmml::vec3f::UP;
-            vmml::mat4f viewMatrix = lookAt(rotation * eyePos, vmml::vec3f::ZERO, rotation * eyeUp);
-            vmml::mat4f modelMatrix(translation * scaling);
-            
-            shader->setUniform("ProjectionMatrix", vmml::mat4f::IDENTITY);
-            shader->setUniform("ModelViewMatrix", viewMatrix * modelMatrix);
-        }
-        else
-        {
-            util::log("No shader available.", util::LM_WARNING);
-        }
-        geometry.draw();
-    }
-
+    vmml::mat4f translation = vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0));
+    vmml::mat4f scaling = vmml::create_scaling(vmml::vec3f(.2f));
+    
+    vmml::mat3f rotation = vmml::create_rotation(gyro->getRoll() * -M_PI_F - .3f, vmml::vec3f::UNIT_Y) *
+    vmml::create_rotation(gyro->getPitch() * -M_PI_F + .3f, vmml::vec3f::UNIT_X);
+    _eyePos = rotation * vmml::vec3f(0, 0, -1);
+    vmml::vec3f eyeUp = vmml::vec3f::UP;
+    _viewMatrix = lookAt(_eyePos, _eyePos + vmml::vec3f(0,0,1), rotation * eyeUp);
+    
+    _modelMatrix = translation * scaling;
+    
+    drawModel("quad");
 }
