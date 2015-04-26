@@ -41,6 +41,7 @@ public:
     void pushModelMatrix();
     void popModelMatrix();
     void transformModelMatrix(const vmml::mat4f &t);
+    vmml::mat4f perspective(float fov, float aspect, float near, float far);
     
 private:
     double _time;
@@ -54,6 +55,12 @@ private:
     MatrixStack _modelMatrixStack;
     vmml::mat4f _modelMatrix;
     vmml::mat4f _viewMatrix;
+    vmml::mat4f _projectionMatrix;
+    
+    Camera _camera;
+    float _forwardSpeed;
+    float _cameraForward;
+    float _cameraRotation;
 };
 
 

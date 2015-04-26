@@ -56,6 +56,7 @@ void DemoSceneManager::onTouchMoved(float x, float y)
 void DemoSceneManager::onTouchEnded(float x, float y, int tapCount)
 {
     util::log("onTouchEnded");
+    _camera.resetCamera();
 }
 
 void DemoSceneManager::onScaleBegan(float x, float y)
@@ -88,25 +89,42 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     getApplication()->addScaleHandler(this);
 
     _modelMatrixStack.push(vmml::mat4f::IDENTITY);
+    
+    _cameraForward = 0.0f;
+    _forwardSpeed = 1.0f;
+    _cameraRotation = M_PI_F;
+    
+    _camera.moveCamera(_cameraForward);
+    //_camera.rotateCamera(vmml::vec3f::UNIT_Y, _cameraRotation);
+    
+    _projectionMatrix = perspective(90.0f, 4.0f/3.0f, -1.0f, 1200.0f);
 
     loadModel("quad.obj", false, false);
     loadModel("guy.obj", true, true);
 //    loadSound("test.mp3");
 }
 
-vmml::mat4f lookAt(vmml::vec3f eye, vmml::vec3f target, vmml::vec3f up)
+
+vmml::mat4f DemoSceneManager::perspective(float fov, float aspect, float near, float far)
 {
-    vmml::vec3f zaxis = vmml::normalize(eye - target);
-    vmml::vec3f xaxis = vmml::normalize(vmml::cross<3>(up, zaxis));
-    vmml::vec3f yaxis = vmml::cross<3>(zaxis, xaxis);
+    vmml::mat4f perspective = vmml::mat4f::IDENTITY;
     
-    vmml::mat4f view;
-    view.set_row(0, vmml::vec4f(xaxis.x(), xaxis.y(), xaxis.z(), -vmml::dot(xaxis, eye)));
-    view.set_row(1, vmml::vec4f(yaxis.x(), yaxis.y(), yaxis.z(), -vmml::dot(yaxis, eye)));
-    view.set_row(2, vmml::vec4f(zaxis.x(), zaxis.y(), zaxis.z(), -vmml::dot(zaxis, eye)));
-    view.set_row(3, vmml::vec4f(0, 0, 0, 1.0));
+    for(int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
+            perspective.at(i, j) = 0.0f;
+        }
+    }
     
-    return view;
+    float angle = (fov / 180.0f) * M_PI_F;
+    float f = 1.0f / tan(angle * 0.5f);
+    
+    perspective.at(0, 0) = f / aspect;
+    perspective.at(1, 1) = f;
+    perspective.at(2, 2) = (far + near) / (near - far);
+    perspective.at(2, 3) = -1.0f;
+    perspective.at(3, 2) = (2.0f * far * near) / (near - far);
+    
+    return perspective;
 }
 
 void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
@@ -119,7 +137,7 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
         ShaderPtr shader = material->getShader();
         if (shader.get())
         {
-            shader->setUniform("ProjectionMatrix", vmml::mat4f::IDENTITY);
+            shader->setUniform("ProjectionMatrix", _projectionMatrix);
             shader->setUniform("ViewMatrix", _viewMatrix);
             shader->setUniform("ModelMatrix", _modelMatrix);
             
@@ -149,25 +167,24 @@ void DemoSceneManager::draw(double deltaT)
     
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     
     glCullFace(GL_BACK);
-    //glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
     
     Gyro *gyro = Gyro::getInstance();
     gyro->read();
     
+    //Camera
+    _cameraForward = gyro->getPitch() * 0.5;
+    _camera.moveCamera(_cameraForward);
+    _viewMatrix = _camera.getViewMatrix();
+    
+    //Model
     vmml::mat4f translation = vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0));
-    vmml::mat4f scaling = vmml::create_scaling(vmml::vec3f(.2f));
+
+    _modelMatrix = translation;
     
-    vmml::mat3f rotation = vmml::create_rotation(gyro->getRoll() * -M_PI_F - .3f, vmml::vec3f::UNIT_Y) *
-    vmml::create_rotation(gyro->getPitch() * -M_PI_F + .3f, vmml::vec3f::UNIT_X);
-    _eyePos = rotation * vmml::vec3f(0, 0, -1);
-    vmml::vec3f eyeUp = vmml::vec3f::UP;
-    _viewMatrix = lookAt(_eyePos, _eyePos + vmml::vec3f(0,0,1), rotation * eyeUp);
-    
-    _modelMatrix = translation * scaling;
-    
-    drawModel("quad");
+    drawModel("guy");
 }

@@ -12,6 +12,7 @@
 #include <iostream>	
 #include "vector.hpp"
 #include "matrix.hpp"
+#include "addendum.hpp"
 
 class Camera
 {
@@ -20,9 +21,12 @@ public:
     Camera();
     ~Camera();
     
-    void lookAt(const vmml::vec3f &point);
-    void moveCamera(const vmml::vec3f &translation);
+    vmml::mat4f lookAt(vmml::vec3f eye, vmml::vec3f target, vmml::vec3f up);
+    void moveCamera(const float camSpeed);
     void rotateCamera(const vmml::vec3f &axis, float rotation);
+    void resetCamera();
+    
+    vmml::mat4f getViewMatrix();
     
 private:
     
