@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100CC0A01AED403F00FA2188 /* tunnel3.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 100CC09E1AED403F00FA2188 /* tunnel3.mtl */; };
+		100CC0A11AED403F00FA2188 /* tunnel3.obj in Resources */ = {isa = PBXBuildFile; fileRef = 100CC09F1AED403F00FA2188 /* tunnel3.obj */; };
+		1019B2551AECF61100C72708 /* perspective.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 1019B2531AECF61100C72708 /* perspective.mtl */; };
+		1019B2561AECF61100C72708 /* perspective.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1019B2541AECF61100C72708 /* perspective.obj */; };
+		1019B2581AECF62300C72708 /* perspective.frag in Resources */ = {isa = PBXBuildFile; fileRef = 1019B2571AECF62300C72708 /* perspective.frag */; };
+		1019B25A1AECF63B00C72708 /* perspective.vert in Resources */ = {isa = PBXBuildFile; fileRef = 1019B2591AECF63B00C72708 /* perspective.vert */; };
+		1019B2611AECFE1E00C72708 /* tunnel3.frag in Resources */ = {isa = PBXBuildFile; fileRef = 1019B25F1AECFE1E00C72708 /* tunnel3.frag */; };
+		1019B2621AECFE1E00C72708 /* tunnel3.vert in Resources */ = {isa = PBXBuildFile; fileRef = 1019B2601AECFE1E00C72708 /* tunnel3.vert */; };
 		10659C291AE6549000CB62C5 /* quad.frag in Resources */ = {isa = PBXBuildFile; fileRef = 10659C281AE6549000CB62C5 /* quad.frag */; };
 		10659C2B1AE654A800CB62C5 /* quad.vert in Resources */ = {isa = PBXBuildFile; fileRef = 10659C2A1AE654A800CB62C5 /* quad.vert */; };
 		10659C2D1AE657A200CB62C5 /* quad.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 10659C2C1AE657A200CB62C5 /* quad.mtl */; };
@@ -61,6 +69,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		100CC09E1AED403F00FA2188 /* tunnel3.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tunnel3.mtl; sourceTree = "<group>"; };
+		100CC09F1AED403F00FA2188 /* tunnel3.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tunnel3.obj; sourceTree = "<group>"; };
+		1019B2531AECF61100C72708 /* perspective.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = perspective.mtl; sourceTree = "<group>"; };
+		1019B2541AECF61100C72708 /* perspective.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = perspective.obj; sourceTree = "<group>"; };
+		1019B2571AECF62300C72708 /* perspective.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = perspective.frag; sourceTree = "<group>"; };
+		1019B2591AECF63B00C72708 /* perspective.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = perspective.vert; sourceTree = "<group>"; };
+		1019B25F1AECFE1E00C72708 /* tunnel3.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = tunnel3.frag; sourceTree = "<group>"; };
+		1019B2601AECFE1E00C72708 /* tunnel3.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = tunnel3.vert; sourceTree = "<group>"; };
 		10659C281AE6549000CB62C5 /* quad.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quad.frag; sourceTree = "<group>"; };
 		10659C2A1AE654A800CB62C5 /* quad.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quad.vert; sourceTree = "<group>"; };
 		10659C2C1AE657A200CB62C5 /* quad.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quad.mtl; sourceTree = "<group>"; };
@@ -397,6 +413,10 @@
 		F87C331F1910561A00E8A523 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				100CC09E1AED403F00FA2188 /* tunnel3.mtl */,
+				100CC09F1AED403F00FA2188 /* tunnel3.obj */,
+				1019B2531AECF61100C72708 /* perspective.mtl */,
+				1019B2541AECF61100C72708 /* perspective.obj */,
 				F8E192071AB760D900034FF7 /* guy */,
 				F87C33201910561A00E8A523 /* sphere.obj */,
 				F87C33271910561A00E8A523 /* quad.obj */,
@@ -408,10 +428,14 @@
 		F87C33301910561A00E8A523 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				1019B25F1AECFE1E00C72708 /* tunnel3.frag */,
+				1019B2601AECFE1E00C72708 /* tunnel3.vert */,
 				F87C33311910561A00E8A523 /* guy.frag */,
 				F87C33321910561A00E8A523 /* guy.vert */,
 				10659C281AE6549000CB62C5 /* quad.frag */,
 				10659C2A1AE654A800CB62C5 /* quad.vert */,
+				1019B2571AECF62300C72708 /* perspective.frag */,
+				1019B2591AECF63B00C72708 /* perspective.vert */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -567,18 +591,26 @@
 				10659C291AE6549000CB62C5 /* quad.frag in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				F87C33491910561A00E8A523 /* test.mp3 in Resources */,
+				1019B25A1AECF63B00C72708 /* perspective.vert in Resources */,
 				10659C2B1AE654A800CB62C5 /* quad.vert in Resources */,
 				283D33F312AEDA3D00C06CB4 /* FrameworkViewController.xib in Resources */,
 				F8ED69F316E64F7400E6D6CA /* Default-568h@2x.png in Resources */,
+				1019B2611AECFE1E00C72708 /* tunnel3.frag in Resources */,
 				F8E1920D1AB760D900034FF7 /* diffuse.png in Resources */,
+				1019B2581AECF62300C72708 /* perspective.frag in Resources */,
+				100CC0A01AED403F00FA2188 /* tunnel3.mtl in Resources */,
+				100CC0A11AED403F00FA2188 /* tunnel3.obj in Resources */,
 				F8ED69F416E64F7400E6D6CA /* Default.png in Resources */,
 				F87C333D1910561A00E8A523 /* quad.obj in Resources */,
+				1019B2621AECFE1E00C72708 /* tunnel3.vert in Resources */,
 				10659C2D1AE657A200CB62C5 /* quad.mtl in Resources */,
 				F8E1920F1AB760D900034FF7 /* guy.obj in Resources */,
 				F8E1920E1AB760D900034FF7 /* guy.mtl in Resources */,
 				F8ED69F516E64F7400E6D6CA /* Default@2x.png in Resources */,
 				F8ED6AD016E652B800E6D6CA /* ACKNOWLEDGEMENTS in Resources */,
 				F87C33371910561A00E8A523 /* sphere.obj in Resources */,
+				1019B2551AECF61100C72708 /* perspective.mtl in Resources */,
+				1019B2561AECF61100C72708 /* perspective.obj in Resources */,
 				F8ED6AD116E652B800E6D6CA /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

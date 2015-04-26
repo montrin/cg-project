@@ -37,6 +37,7 @@ public:
     virtual void draw(double deltaT);
     
     void drawModel(const std::string &name, GLenum mode = GL_TRIANGLES);
+    void drawModel2(const std::string &name, GLenum mode = GL_TRIANGLES);
 
     void pushModelMatrix();
     void popModelMatrix();

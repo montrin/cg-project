@@ -12,10 +12,10 @@
 //void main()
 //{
 //    vec4 pos = ModelViewMatrix * Position;  // vertex position in eye coordinates
-//    
+//
 //    // TODO: uncomment to assign normal value to color varying variable
 //    // colorVarying = vec4(vec3(0.5) + Normal.xyz * 0.5, 1.0);
-//    
+//
 //    gl_Position = ProjectionMatrix * pos;
 //}
 

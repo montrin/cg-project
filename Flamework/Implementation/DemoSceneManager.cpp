@@ -15,6 +15,7 @@
 #include "ShaderData.h"
 #include "Framework_GL.h"
 #include "Util.h"
+#include "frustum.hpp"
 
 #include <boost/lexical_cast.hpp>
 
@@ -25,10 +26,10 @@ using boost::lexical_cast;
 
 
 DemoSceneManager::DemoSceneManager(Application *application)
-    : SceneManager(application)
-    , _time(12)
-    , _scaling(1, 1)
-    , _scrolling(0, 0.25)
+: SceneManager(application)
+, _time(12)
+, _scaling(1, 1)
+, _scrolling(0, 0.25)
 {
     
 }
@@ -41,7 +42,7 @@ void DemoSceneManager::onTouchBegan(float x, float y)
     vmml::vec2f cScrollPos(x, y);
     _lScrollPos = cScrollPos;
     
-//    getSound("test")->play();
+    //    getSound("test")->play();
 }
 
 void DemoSceneManager::onTouchMoved(float x, float y)
@@ -86,11 +87,12 @@ void DemoSceneManager::initialize(size_t width, size_t height)
 {
     getApplication()->addTouchHandler(this);
     getApplication()->addScaleHandler(this);
-
+    
     _modelMatrixStack.push(vmml::mat4f::IDENTITY);
-
-    loadModel("quad.obj", false, false);
-//    loadSound("test.mp3");
+    
+    loadModel("tunnel3.obj", false, true);
+    loadModel("quad.obj", false, true);
+    //    loadSound("test.mp3");
 }
 
 vmml::mat4f lookAt(vmml::vec3f eye, vmml::vec3f target, vmml::vec3f up)
@@ -118,7 +120,13 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
         ShaderPtr shader = material->getShader();
         if (shader.get())
         {
-            shader->setUniform("ProjectionMatrix", vmml::mat4f::IDENTITY);
+            vmml::frustum<float> _projectionMatrix(-1.0f,1.0f,-1.0f,1.0f,0.2f,100.0f);
+//            vmml::frustum<float> _projectionMatrix(vmml::frustum<float>::DEFAULT);
+            _projectionMatrix.set_perspective(40.0f, _projectionMatrix.get_width()/_projectionMatrix.get_height(), _projectionMatrix.near_plane(), _projectionMatrix.far_plane());
+            std::cout << _projectionMatrix.compute_matrix();
+//            shader->setUniform("ProjectionMatrix", vmml::mat4f::IDENTITY);
+            shader->setUniform("ProjectionMatrix", _projectionMatrix.compute_matrix());
+            
             shader->setUniform("ViewMatrix", _viewMatrix);
             shader->setUniform("ModelMatrix", _modelMatrix);
             
@@ -128,7 +136,46 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             
             shader->setUniform("EyePos", _eyePos);
             
-            shader->setUniform("LightPos", vmml::vec4f(0.f, 1.f, .5f, 1.f));
+            shader->setUniform("LightPos", vmml::vec4f(0.0f, 44.f, .0f, 1.f));
+            shader->setUniform("Ia", vmml::vec3f(1.f));
+            shader->setUniform("Id", vmml::vec3f(1.f));
+            shader->setUniform("Is", vmml::vec3f(1.f));
+        }
+        else
+        {
+            util::log("No shader available.", util::LM_WARNING);
+        }
+        geometry.draw(mode);
+    }
+}
+
+void DemoSceneManager::drawModel2(const std::string &name, GLenum mode)
+{
+    Model::GroupMap &groups = getModel(name)->getGroups();
+    for (auto i = groups.begin(); i != groups.end(); ++i)
+    {
+        Geometry &geometry = i->second;
+        MaterialPtr material = geometry.getMaterial();
+        ShaderPtr shader = material->getShader();
+        if (shader.get())
+        {
+            vmml::frustum<float> _projectionMatrix(-1.0f,1.0f,-1.0f,1.0f,0.2f,100.0f);
+            //            vmml::frustum<float> _projectionMatrix(vmml::frustum<float>::DEFAULT);
+            _projectionMatrix.set_perspective(0.0f, _projectionMatrix.get_width()/_projectionMatrix.get_height(), _projectionMatrix.near_plane(), _projectionMatrix.far_plane());
+            std::cout << _projectionMatrix.compute_matrix();
+            //            shader->setUniform("ProjectionMatrix", vmml::mat4f::IDENTITY);
+            shader->setUniform("ProjectionMatrix", _projectionMatrix.compute_matrix());
+            
+            shader->setUniform("ViewMatrix", _viewMatrix);
+            shader->setUniform("ModelMatrix", _modelMatrix);
+            
+            vmml::mat3f normalMatrix;
+            vmml::compute_inverse(vmml::transpose(vmml::mat3f(_modelMatrix)), normalMatrix);
+            shader->setUniform("NormalMatrix", normalMatrix);
+            
+            shader->setUniform("EyePos", _eyePos);
+            
+            shader->setUniform("LightPos", vmml::vec4f(0.0f, 1.f, .5f, 1.f));
             shader->setUniform("Ia", vmml::vec3f(1.f));
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
@@ -143,9 +190,10 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
 
 void DemoSceneManager::draw(double deltaT)
 {
-
-
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    _time += deltaT;
+    float angle = _time * .1;   // .1 radians per second
+    
+    glClearColor(0.25f, 0.25f, 0.25f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -156,32 +204,21 @@ void DemoSceneManager::draw(double deltaT)
     Gyro *gyro = Gyro::getInstance();
     gyro->read();
     
-    Model::GroupMap &groups = getModel("quad")->getGroups();
-    for (auto i = groups.begin(); i != groups.end(); ++i)
-    {
-        Geometry &geometry = i->second;
-        MaterialPtr material = geometry.getMaterial();
-        ShaderPtr shader = material->getShader();
-        if (shader)
-        {
-            vmml::mat4f translation = vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0));
-            vmml::mat4f scaling = vmml::create_scaling(vmml::vec3f(0.25f));
-            
-            vmml::mat3f rotation = vmml::create_rotation(gyro->getRoll() * -M_PI_F, vmml::vec3f::UNIT_Y) *
-            vmml::create_rotation(gyro->getPitch() * -M_PI_F, vmml::vec3f::UNIT_X);
-            vmml::vec3f eyePos(0, 0, 0.25);
-            vmml::vec3f eyeUp = vmml::vec3f::UP;
-            vmml::mat4f viewMatrix = lookAt(rotation * eyePos, vmml::vec3f::ZERO, rotation * eyeUp);
-            vmml::mat4f modelMatrix(translation * scaling);
-            
-            shader->setUniform("ProjectionMatrix", vmml::mat4f::IDENTITY);
-            shader->setUniform("ModelViewMatrix", viewMatrix * modelMatrix);
-        }
-        else
-        {
-            util::log("No shader available.", util::LM_WARNING);
-        }
-        geometry.draw();
-    }
+    vmml::mat4f translation = vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0));
+    vmml::mat4f scaling = vmml::create_scaling(vmml::vec3f(.2f));
+    
+    vmml::mat3f rotation = vmml::create_rotation(gyro->getRoll() * -M_PI_F - .3f, vmml::vec3f::UNIT_Y) *
+    vmml::create_rotation(gyro->getPitch() * -M_PI_F + .3f, vmml::vec3f::UNIT_X);
+    _eyePos = rotation * vmml::vec3f(0.0f, 0.0f, 0.0f);
+    vmml::vec3f eyeUp = vmml::vec3f::DOWN;
+    _viewMatrix = lookAt(_eyePos, vmml::vec3f::UP, rotation * eyeUp);
+    
+    _modelMatrix = translation * scaling;
+
+//    drawModel2("quad");
+    drawModel("tunnel3");
+//    drawModel2("quad");
+    _eyePos = rotation * vmml::vec3f(0.0f, 2.0f, 0.0f);
+    _viewMatrix = lookAt(_eyePos, vmml::vec3f::UP, rotation * eyeUp);
 
 }
