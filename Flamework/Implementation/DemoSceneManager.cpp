@@ -97,10 +97,12 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     _camera.moveCamera(_cameraForward);
     //_camera.rotateCamera(vmml::vec3f::UNIT_Y, _cameraRotation);
     
-    _projectionMatrix = perspective(90.0f, 4.0f/3.0f, -1.0f, 1200.0f);
+    _projectionMatrix = perspective(1000.0f, 4.0f/3.0f, -1.0f, 1200.0f);
 
     loadModel("quad.obj", false, false);
     loadModel("guy.obj", true, true);
+    loadModel("tunnel3.obj", true, true);
+    
 //    loadSound("test.mp3");
 }
 
@@ -186,5 +188,5 @@ void DemoSceneManager::draw(double deltaT)
 
     _modelMatrix = translation;
     
-    drawModel("guy");
+    drawModel("tunnel3");
 }
