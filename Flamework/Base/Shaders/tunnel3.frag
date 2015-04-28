@@ -54,7 +54,8 @@ void main()
         specularPhonShading = vec4(clamp(specular, 0.0, 1.0), 1.0);
     }
     
-    lowp vec4 color = texture2D(NormalMap, vec2(texCoordVarying));    // TODO: read color from DiffuseMap
+    lowp vec4 color = texture2D(DiffuseMap , vec2(texCoordVarying));
     gl_FragColor = (ambientVarying + diffusePhongShading) * color + specularPhonShading;
+    gl_FrontFacing = false;
     
 }

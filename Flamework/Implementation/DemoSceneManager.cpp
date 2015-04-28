@@ -150,7 +150,8 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             
             shader->setUniform("EyePos", _eyePos);
             
-            shader->setUniform("LightPos", vmml::vec4f(0.f, 1.f, .5f, 1.f));
+//            shader->setUniform("LightPos", vmml::vec4f(0.f, 1.f, .5f, 1.f));
+            shader->setUniform("LightPos", _eyePos);
             shader->setUniform("Ia", vmml::vec3f(1.f));
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
@@ -175,7 +176,7 @@ void DemoSceneManager::draw(double deltaT)
     
     glCullFace(GL_BACK);
     glEnable(GL_CULL_FACE);
-    
+        
     Gyro *gyro = Gyro::getInstance();
     gyro->read();
     
