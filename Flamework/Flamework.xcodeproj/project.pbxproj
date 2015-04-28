@@ -11,6 +11,18 @@
 		103117931AEEA722002B5FF7 /* tunnel3.obj in Resources */ = {isa = PBXBuildFile; fileRef = 103117911AEEA722002B5FF7 /* tunnel3.obj */; };
 		103117961AEEA72C002B5FF7 /* tunnel3.frag in Resources */ = {isa = PBXBuildFile; fileRef = 103117941AEEA72C002B5FF7 /* tunnel3.frag */; };
 		103117971AEEA72C002B5FF7 /* tunnel3.vert in Resources */ = {isa = PBXBuildFile; fileRef = 103117951AEEA72C002B5FF7 /* tunnel3.vert */; };
+		1031179A1AEEA8C2002B5FF7 /* tunnel_finished.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 103117981AEEA8C2002B5FF7 /* tunnel_finished.mtl */; };
+		1031179B1AEEA8C2002B5FF7 /* tunnel_finished.obj in Resources */ = {isa = PBXBuildFile; fileRef = 103117991AEEA8C2002B5FF7 /* tunnel_finished.obj */; };
+		1031179E1AEEA8CF002B5FF7 /* tunnel_finished.frag in Resources */ = {isa = PBXBuildFile; fileRef = 1031179C1AEEA8CF002B5FF7 /* tunnel_finished.frag */; };
+		1031179F1AEEA8CF002B5FF7 /* tunnel_finished.vert in Resources */ = {isa = PBXBuildFile; fileRef = 1031179D1AEEA8CF002B5FF7 /* tunnel_finished.vert */; };
+		103117A91AEEABD0002B5FF7 /* ConcreteBunker0366_1_M.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 103117A11AEEABD0002B5FF7 /* ConcreteBunker0366_1_M.jpg */; };
+		103117AA1AEEABD0002B5FF7 /* ConcreteBunker0410_1_M.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 103117A21AEEABD0002B5FF7 /* ConcreteBunker0410_1_M.jpg */; };
+		103117AB1AEEABD0002B5FF7 /* ConcreteLeaking0018_M.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 103117A31AEEABD0002B5FF7 /* ConcreteLeaking0018_M.jpg */; };
+		103117AC1AEEABD0002B5FF7 /* LettersNumbers0078_M.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 103117A41AEEABD0002B5FF7 /* LettersNumbers0078_M.jpg */; };
+		103117AD1AEEABD0002B5FF7 /* LettersNumbers0097_M.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 103117A51AEEABD0002B5FF7 /* LettersNumbers0097_M.jpg */; };
+		103117AE1AEEABD0002B5FF7 /* RustLeak0018_1_M.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 103117A61AEEABD0002B5FF7 /* RustLeak0018_1_M.jpg */; };
+		103117AF1AEEABD0002B5FF7 /* RustPaint0257_9_M.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 103117A71AEEABD0002B5FF7 /* RustPaint0257_9_M.jpg */; };
+		103117B01AEEABD0002B5FF7 /* SignsTrespassing0045_1_M.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 103117A81AEEABD0002B5FF7 /* SignsTrespassing0045_1_M.jpg */; };
 		10659C291AE6549000CB62C5 /* quad.frag in Resources */ = {isa = PBXBuildFile; fileRef = 10659C281AE6549000CB62C5 /* quad.frag */; };
 		10659C2B1AE654A800CB62C5 /* quad.vert in Resources */ = {isa = PBXBuildFile; fileRef = 10659C2A1AE654A800CB62C5 /* quad.vert */; };
 		10659C2D1AE657A200CB62C5 /* quad.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 10659C2C1AE657A200CB62C5 /* quad.mtl */; };
@@ -69,6 +81,18 @@
 		103117911AEEA722002B5FF7 /* tunnel3.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tunnel3.obj; sourceTree = "<group>"; };
 		103117941AEEA72C002B5FF7 /* tunnel3.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = tunnel3.frag; sourceTree = "<group>"; };
 		103117951AEEA72C002B5FF7 /* tunnel3.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = tunnel3.vert; sourceTree = "<group>"; };
+		103117981AEEA8C2002B5FF7 /* tunnel_finished.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tunnel_finished.mtl; sourceTree = "<group>"; };
+		103117991AEEA8C2002B5FF7 /* tunnel_finished.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tunnel_finished.obj; sourceTree = "<group>"; };
+		1031179C1AEEA8CF002B5FF7 /* tunnel_finished.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = tunnel_finished.frag; sourceTree = "<group>"; };
+		1031179D1AEEA8CF002B5FF7 /* tunnel_finished.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = tunnel_finished.vert; sourceTree = "<group>"; };
+		103117A11AEEABD0002B5FF7 /* ConcreteBunker0366_1_M.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ConcreteBunker0366_1_M.jpg; path = img/ConcreteBunker0366_1_M.jpg; sourceTree = "<group>"; };
+		103117A21AEEABD0002B5FF7 /* ConcreteBunker0410_1_M.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ConcreteBunker0410_1_M.jpg; path = img/ConcreteBunker0410_1_M.jpg; sourceTree = "<group>"; };
+		103117A31AEEABD0002B5FF7 /* ConcreteLeaking0018_M.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = ConcreteLeaking0018_M.jpg; path = img/ConcreteLeaking0018_M.jpg; sourceTree = "<group>"; };
+		103117A41AEEABD0002B5FF7 /* LettersNumbers0078_M.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = LettersNumbers0078_M.jpg; path = img/LettersNumbers0078_M.jpg; sourceTree = "<group>"; };
+		103117A51AEEABD0002B5FF7 /* LettersNumbers0097_M.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = LettersNumbers0097_M.jpg; path = img/LettersNumbers0097_M.jpg; sourceTree = "<group>"; };
+		103117A61AEEABD0002B5FF7 /* RustLeak0018_1_M.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = RustLeak0018_1_M.jpg; path = img/RustLeak0018_1_M.jpg; sourceTree = "<group>"; };
+		103117A71AEEABD0002B5FF7 /* RustPaint0257_9_M.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = RustPaint0257_9_M.jpg; path = img/RustPaint0257_9_M.jpg; sourceTree = "<group>"; };
+		103117A81AEEABD0002B5FF7 /* SignsTrespassing0045_1_M.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = SignsTrespassing0045_1_M.jpg; path = img/SignsTrespassing0045_1_M.jpg; sourceTree = "<group>"; };
 		10659C281AE6549000CB62C5 /* quad.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quad.frag; sourceTree = "<group>"; };
 		10659C2A1AE654A800CB62C5 /* quad.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = quad.vert; sourceTree = "<group>"; };
 		10659C2C1AE657A200CB62C5 /* quad.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quad.mtl; sourceTree = "<group>"; };
@@ -222,6 +246,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		103117A01AEEA9E2002B5FF7 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				103117A11AEEABD0002B5FF7 /* ConcreteBunker0366_1_M.jpg */,
+				103117A21AEEABD0002B5FF7 /* ConcreteBunker0410_1_M.jpg */,
+				103117A31AEEABD0002B5FF7 /* ConcreteLeaking0018_M.jpg */,
+				103117A41AEEABD0002B5FF7 /* LettersNumbers0078_M.jpg */,
+				103117A51AEEABD0002B5FF7 /* LettersNumbers0097_M.jpg */,
+				103117A61AEEABD0002B5FF7 /* RustLeak0018_1_M.jpg */,
+				103117A71AEEABD0002B5FF7 /* RustPaint0257_9_M.jpg */,
+				103117A81AEEABD0002B5FF7 /* SignsTrespassing0045_1_M.jpg */,
+			);
+			name = img;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +434,7 @@
 		F87C331E1910561A00E8A523 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				103117A01AEEA9E2002B5FF7 /* img */,
 				F87C331F1910561A00E8A523 /* Models */,
 				F87C33301910561A00E8A523 /* Shaders */,
 				F87C33351910561A00E8A523 /* Sounds */,
@@ -405,6 +445,8 @@
 		F87C331F1910561A00E8A523 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				103117981AEEA8C2002B5FF7 /* tunnel_finished.mtl */,
+				103117991AEEA8C2002B5FF7 /* tunnel_finished.obj */,
 				103117901AEEA722002B5FF7 /* tunnel3.mtl */,
 				103117911AEEA722002B5FF7 /* tunnel3.obj */,
 				F8E192071AB760D900034FF7 /* guy */,
@@ -418,6 +460,8 @@
 		F87C33301910561A00E8A523 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				1031179C1AEEA8CF002B5FF7 /* tunnel_finished.frag */,
+				1031179D1AEEA8CF002B5FF7 /* tunnel_finished.vert */,
 				103117941AEEA72C002B5FF7 /* tunnel3.frag */,
 				103117951AEEA72C002B5FF7 /* tunnel3.vert */,
 				F87C33311910561A00E8A523 /* guy.frag */,
@@ -575,24 +619,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				103117971AEEA72C002B5FF7 /* tunnel3.vert in Resources */,
+				103117AC1AEEABD0002B5FF7 /* LettersNumbers0078_M.jpg in Resources */,
+				103117AF1AEEABD0002B5FF7 /* RustPaint0257_9_M.jpg in Resources */,
 				F8757CA119107FA000B62379 /* guy.vert in Resources */,
+				1031179F1AEEA8CF002B5FF7 /* tunnel_finished.vert in Resources */,
 				103117961AEEA72C002B5FF7 /* tunnel3.frag in Resources */,
+				103117AA1AEEABD0002B5FF7 /* ConcreteBunker0410_1_M.jpg in Resources */,
 				F8757CA019107F9800B62379 /* guy.frag in Resources */,
 				10659C291AE6549000CB62C5 /* quad.frag in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				103117AD1AEEABD0002B5FF7 /* LettersNumbers0097_M.jpg in Resources */,
+				1031179E1AEEA8CF002B5FF7 /* tunnel_finished.frag in Resources */,
 				F87C33491910561A00E8A523 /* test.mp3 in Resources */,
 				10659C2B1AE654A800CB62C5 /* quad.vert in Resources */,
 				283D33F312AEDA3D00C06CB4 /* FrameworkViewController.xib in Resources */,
 				F8ED69F316E64F7400E6D6CA /* Default-568h@2x.png in Resources */,
 				F8E1920D1AB760D900034FF7 /* diffuse.png in Resources */,
 				103117921AEEA722002B5FF7 /* tunnel3.mtl in Resources */,
+				103117A91AEEABD0002B5FF7 /* ConcreteBunker0366_1_M.jpg in Resources */,
 				F8ED69F416E64F7400E6D6CA /* Default.png in Resources */,
+				103117AE1AEEABD0002B5FF7 /* RustLeak0018_1_M.jpg in Resources */,
+				1031179A1AEEA8C2002B5FF7 /* tunnel_finished.mtl in Resources */,
 				F87C333D1910561A00E8A523 /* quad.obj in Resources */,
 				10659C2D1AE657A200CB62C5 /* quad.mtl in Resources */,
 				F8E1920F1AB760D900034FF7 /* guy.obj in Resources */,
+				103117B01AEEABD0002B5FF7 /* SignsTrespassing0045_1_M.jpg in Resources */,
 				F8E1920E1AB760D900034FF7 /* guy.mtl in Resources */,
 				F8ED69F516E64F7400E6D6CA /* Default@2x.png in Resources */,
+				1031179B1AEEA8C2002B5FF7 /* tunnel_finished.obj in Resources */,
 				F8ED6AD016E652B800E6D6CA /* ACKNOWLEDGEMENTS in Resources */,
+				103117AB1AEEABD0002B5FF7 /* ConcreteLeaking0018_M.jpg in Resources */,
 				103117931AEEA722002B5FF7 /* tunnel3.obj in Resources */,
 				F87C33371910561A00E8A523 /* sphere.obj in Resources */,
 				F8ED6AD116E652B800E6D6CA /* LICENSE in Resources */,

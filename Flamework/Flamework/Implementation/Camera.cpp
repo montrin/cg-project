@@ -8,7 +8,7 @@
 
 #include "Camera.h"
 #include <cassert>
-
+//monica regarding tunnel use _position(vmml::vec3f::UP)
 Camera::Camera() : _view(0.0f, 0.0f, -1.0f), _position(vmml::vec3f::UP)
 {
     

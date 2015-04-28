@@ -102,6 +102,7 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     loadModel("quad.obj", false, false);
     loadModel("guy.obj", true, true);
     loadModel("tunnel3.obj", true, true);
+    //loadModel("tunnel_finished.obj", true, true);
     
 //    loadSound("test.mp3");
 }

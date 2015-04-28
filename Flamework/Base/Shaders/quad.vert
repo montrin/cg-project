@@ -32,16 +32,13 @@ varying lowp vec4 texCoordVarying;
 varying mediump vec4 posVarying;       // pos in world space
 varying mediump vec3 normalVarying;    // normal in world space
 
-// TODO: create varying variable to hand over color values to the fragment shader
-
 void main()
 {
     posVarying = ModelMatrix * Position;
     normalVarying = NormalMatrix * Normal;
+    ambientVarying = vec4(Ka * Ia, 1.0);
+    texCoordVarying = TexCoord;
+    
     
     gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
-    
-    // TODO: uncomment to assign normal value to color varying variable
-    // colorVarying = vec4(vec3(0.5) + Normal.xyz * 0.5, 1.0);
-    
 }
