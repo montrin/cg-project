@@ -20,7 +20,7 @@
 #define SCROLL_SPEED    0.002f
 #define SCALE_SPEED     0.008f
 
-static const std::string DEFAULT_MATERIAL_NAME = "quad";
+static const std::string DEFAULT_MATERIAL_NAME = "default";
 
 
 SceneManager::SceneManager(Application *application)
@@ -124,8 +124,8 @@ ShaderPtr SceneManager::createShader(const std::string &name, const ShaderData &
         shader = ShaderPtr(new Shader(shaderData));
         shader->registerAttrib("Position", 3, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, position));
         shader->registerAttrib("Normal", 3, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, normal));
-        // shader->registerAttrib("Tangent", 3, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, tangent));
-        // shader->registerAttrib("Bitangent", 3, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, bitangent));
+         shader->registerAttrib("Tangent", 3, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, tangent));
+//         shader->registerAttrib("Bitangent", 3, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, bitangent));
         shader->registerAttrib("TexCoord", 2, GL_FLOAT, sizeof(Vertex), offsetof(Vertex, texCoord));
         return shader;
     }

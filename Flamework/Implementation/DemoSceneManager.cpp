@@ -25,10 +25,10 @@ using boost::lexical_cast;
 
 
 DemoSceneManager::DemoSceneManager(Application *application)
-    : SceneManager(application)
-    , _time(12)
-    , _scaling(1, 1)
-    , _scrolling(0, 0.25)
+: SceneManager(application)
+, _time(12)
+, _scaling(1, 1)
+, _scrolling(0, 0.25)
 {
     
 }
@@ -41,7 +41,7 @@ void DemoSceneManager::onTouchBegan(float x, float y)
     vmml::vec2f cScrollPos(x, y);
     _lScrollPos = cScrollPos;
     
-//    getSound("test")->play();
+    //    getSound("test")->play();
 }
 
 void DemoSceneManager::onTouchMoved(float x, float y)
@@ -87,7 +87,7 @@ void DemoSceneManager::initialize(size_t width, size_t height)
 {
     getApplication()->addTouchHandler(this);
     getApplication()->addScaleHandler(this);
-
+    
     _modelMatrixStack.push(vmml::mat4f::IDENTITY);
     
     _cameraForward = 0.0f;
@@ -97,14 +97,14 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     _camera.moveCamera(_cameraForward);
     //_camera.rotateCamera(vmml::vec3f::UNIT_Y, _cameraRotation);
     
-    _projectionMatrix = perspective(1000.0f, 4.0f/3.0f, -1.0f, 1200.0f);
-
-    loadModel("quad.obj", false, false);
-    loadModel("guy.obj", true, true);
-    loadModel("tunnel3.obj", true, true);
-    //loadModel("tunnel_finished.obj", true, true);
+    _projectionMatrix = perspective(45.0f, 4.0f/3.0f, -1.0f, 100.0f);
     
-//    loadSound("test.mp3");
+    //    loadModel("quad.obj", false, false);
+    //    loadModel("guy.obj", true, true);
+    loadModel("tunnel2.obj", false, false);
+    
+    
+    //    loadSound("test.mp3");
 }
 
 
@@ -150,8 +150,8 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             
             shader->setUniform("EyePos", _eyePos);
             
-//            shader->setUniform("LightPos", vmml::vec4f(0.f, 1.f, .5f, 1.f));
-            shader->setUniform("LightPos", _eyePos);
+            shader->setUniform("LightPos", vmml::vec4f(0.f, 1.f, .5f, 1.f));
+            //           shader->setUniform("LightPos", _eyePos);
             shader->setUniform("Ia", vmml::vec3f(1.f));
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
@@ -175,8 +175,8 @@ void DemoSceneManager::draw(double deltaT)
     glDepthFunc(GL_LEQUAL);
     
     glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
-        
+    //    glEnable(GL_CULL_FACE);
+    
     Gyro *gyro = Gyro::getInstance();
     gyro->read();
     
@@ -187,8 +187,8 @@ void DemoSceneManager::draw(double deltaT)
     
     //Model
     vmml::mat4f translation = vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0));
-
+    
     _modelMatrix = translation;
     
-    drawModel("tunnel3");
+    drawModel("tunnel2");
 }
