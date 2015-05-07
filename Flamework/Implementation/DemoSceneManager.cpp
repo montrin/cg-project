@@ -96,14 +96,14 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     
     _camera.moveCamera(_cameraForward);
     //_camera.rotateCamera(vmml::vec3f::UNIT_Y, _cameraRotation);
-    
-    _projectionMatrix = perspective(45.0f, 4.0f/3.0f, -1.0f, 100.0f);
+        _projectionMatrix = perspective(70.0f, 4.0f/3.0, -1.0f, 100.0f);
+//    _projectionMatrix = vmml::mat4f::IDENTITY;
     
     //    loadModel("quad.obj", false, false);
     //    loadModel("guy.obj", true, true);
-    loadModel("tunnel2.obj", true, true);
-    
-    
+//    loadModel("tunnel2.obj", true, true);
+//    loadModel("tunnel4.obj", true, true);
+    loadModel("tunnel6.obj", true, true);
     //    loadSound("test.mp3");
 }
 
@@ -150,8 +150,8 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             
             shader->setUniform("EyePos", _eyePos);
             
-            shader->setUniform("LightPos", vmml::vec4f(0.f, 1.f, .5f, 1.f));
-            //           shader->setUniform("LightPos", _eyePos);
+//            shader->setUniform("LightPos", vmml::vec4f(0.f, 1.f, .5f, 1.f));
+                       shader->setUniform("LightPos", _eyePos);
             shader->setUniform("Ia", vmml::vec3f(1.f));
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
@@ -190,5 +190,5 @@ void DemoSceneManager::draw(double deltaT)
     
     _modelMatrix = translation;
     
-    drawModel("tunnel2");
+    drawModel("tunnel6");
 }
