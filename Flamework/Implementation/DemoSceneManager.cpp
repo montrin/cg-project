@@ -151,17 +151,22 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             
             shader->setUniform("EyePos", _eyePos);
             
-            shader->setUniform("LightPos", vmml::vec4f(0.f, 10.f, 10.f, 1.f));
+            shader->setUniform("LightPos", vmml::vec4f(2.f, 2.f, 13.0f, 0.f));
+            shader->setUniform("LightDir", vmml::vec4f(-2.f, -2.f, -13.0f, 0.f));
 
+//                       shader->setUniform("LightPos", _eyePos);
             shader->setUniform("Ia", vmml::vec3f(1.f));
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
+            
+            
         }
         else
         {
             util::log("No shader available.", util::LM_WARNING);
         }
         geometry.draw(mode);
+        
     }
 }
 
@@ -221,8 +226,8 @@ void DemoSceneManager::draw(double deltaT)
     glDepthFunc(GL_LEQUAL);
     
     glCullFace(GL_BACK);
-    //    glEnable(GL_CULL_FACE);
-    
+        glEnable(GL_CULL_FACE);
+
     Gyro *gyro = Gyro::getInstance();
     gyro->read();
     
