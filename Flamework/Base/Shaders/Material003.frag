@@ -6,6 +6,7 @@ uniform mediump mat4 ProjectionMatrix;
 uniform mediump mat3 NormalMatrix;
 
 uniform mediump vec4 LightPos;
+uniform mediump vec4 LightDir;
 uniform mediump vec4 EyePos;
 
 uniform lowp vec3 Ka;   // ambient material coefficient
@@ -53,7 +54,8 @@ void main()
 //    mediump vec4 pos2 = LightPos;        // pos in world space
 //    pos2 = vec4(n,0) * pos2;
 
-    mediump vec3 l = normalize((LightPos - pos).xyz);
+//    mediump vec3 l = normalize((LightPos - pos).xyz);
+    mediump vec3 l = normalize((LightPos - LightDir).xyz);
     lowp float intensity = dot(n, l);
     lowp vec3 diffuse = Kd * clamp(intensity, 0.0, 1.0) * Id;
     lowp vec4 diffuseResult = vec4(clamp(diffuse, 0.0, 1.0), 1.0);
