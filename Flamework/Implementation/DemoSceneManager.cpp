@@ -164,6 +164,14 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
     }
 }
 
+void DemoSceneManager::useShader(const std::string &shaderName)
+{
+    if(shaderName != _shaderInUse) {
+        loadShader(shaderName);
+        _shaderInUse = shaderName;
+    }
+}
+
 void DemoSceneManager::draw(double deltaT)
 {
     _time += deltaT;
@@ -190,5 +198,6 @@ void DemoSceneManager::draw(double deltaT)
     
     _modelMatrix = translation;
     
+    useShader("test");
     drawModel("tunnel6");
 }

@@ -22,10 +22,10 @@ private:
     //delete objects
     void destroy();
     
-    //generate an empty color texture with 4 channels (RGBA8) using bilinear filtering
+    //generate an empty color texture
     void generateColorTexture(unsigned int fboWidth, unsigned int fboHeight);
     
-    //generate an empty depth texture with 1 depth channel using bilinear filtering
+    //generate depth buffer
     void setupDepthRenderBuffer(unsigned int fboWidth, unsigned int fboHeight);
     
 public:
