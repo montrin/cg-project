@@ -104,6 +104,7 @@ void DemoSceneManager::initialize(size_t width, size_t height)
 //    loadModel("tunnel2.obj", true, true);
 //    loadModel("tunnel4.obj", true, true);
     loadModel("tunnel6.obj", true, true);
+    loadModel("sphere.obj", true, true);
     //    loadSound("test.mp3");
 }
 
@@ -150,8 +151,8 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             
             shader->setUniform("EyePos", _eyePos);
             
-//            shader->setUniform("LightPos", vmml::vec4f(0.f, 1.f, .5f, 1.f));
-                       shader->setUniform("LightPos", _eyePos);
+            shader->setUniform("LightPos", vmml::vec4f(0.f, 10.f, 10.f, 1.f));
+
             shader->setUniform("Ia", vmml::vec3f(1.f));
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
@@ -162,6 +163,32 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
         }
         geometry.draw(mode);
     }
+}
+
+void DemoSceneManager::pushModelMatrix()
+{
+    if(_modelMatrixStack.size() == 0)
+    {
+        _modelMatrixStack.push(vmml::mat4f::IDENTITY);
+    }
+    vmml::mat4f topTemp = _modelMatrixStack.top();
+    _modelMatrixStack.push(topTemp);
+}
+
+void DemoSceneManager::popModelMatrix()
+{
+    if(_modelMatrixStack.size() > 1)
+    {
+        _modelMatrixStack.pop();
+        _modelMatrix = _modelMatrixStack.top();
+    }
+    
+}
+
+void DemoSceneManager::transformModelMatrix(const vmml::mat4f &t)
+{
+    _modelMatrixStack.top() = _modelMatrix * t;
+    _modelMatrix = _modelMatrixStack.top();
 }
 
 void DemoSceneManager::useShader(const std::string &shaderName, const std::string &modelName)
@@ -204,11 +231,19 @@ void DemoSceneManager::draw(double deltaT)
     _camera.moveCamera(_cameraForward);
     _viewMatrix = _camera.getViewMatrix();
     
-    //Model
-    vmml::mat4f translation = vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0));
+    _modelMatrix = vmml::mat4f::IDENTITY;
     
-    _modelMatrix = translation;
+    //Sun
+    pushModelMatrix();
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
+    drawModel("sphere");
+    popModelMatrix();
     
-    useShader("test", "tunnel6");
+    //Tunnel
+    pushModelMatrix();
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    //useShader("test", "tunnel6");
     drawModel("tunnel6");
+    popModelMatrix();
 }

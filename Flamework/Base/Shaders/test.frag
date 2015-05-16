@@ -61,19 +61,19 @@ void main()
     // If vertex is lit, calculate specular term in view space using the Blinn-Phong model
     
     lowp vec4 specularResult = vec4(0.0);
-    /*
+    
     if (intensity > 0.0)
     {
         mediump vec4 pos3 = EyePos;        // pos in world space
         pos3 = vec4(n,0) * pos3;
         
-        mediump vec3 eyeVec = normalize(EyePos.xyz - pos.xy+z);
+        mediump vec3 eyeVec = normalize(EyePos.xyz - pos.xyz);
         mediump vec3 h = normalize(l + eyeVec);
         mediump float specIntensity = pow(max(dot(h,n), 0.0), Ns);
         mediump vec3 specular = Ks * clamp(specIntensity, 0.0, 1.0) * Is;
         specularResult = vec4(clamp(specular, 0.0, 1.0), 1.0);
         
-    }*/
+    }
     
     lowp vec4 color = texture2D(DiffuseMap, texCoordVarying.st);
     specularResult = specularResult * texture2D(SpecularMap, texCoordVarying.st);
