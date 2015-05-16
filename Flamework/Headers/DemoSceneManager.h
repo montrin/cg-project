@@ -42,7 +42,7 @@ public:
     void popModelMatrix();
     void transformModelMatrix(const vmml::mat4f &t);
     vmml::mat4f perspective(float fov, float aspect, float near, float far);
-    void useShader(const std::string &shaderName);
+    void useShader(const std::string &shaderName, const std::string &modelName);
     
 private:
     double _time;
@@ -63,7 +63,7 @@ private:
     float _cameraForward;
     float _cameraRotation;
     
-    std::string _shaderInUse;
+    ShaderPtr _shader;
 };
 
 

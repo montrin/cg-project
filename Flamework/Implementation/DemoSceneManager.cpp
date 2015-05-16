@@ -164,11 +164,22 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
     }
 }
 
-void DemoSceneManager::useShader(const std::string &shaderName)
+void DemoSceneManager::useShader(const std::string &shaderName, const std::string &modelName)
 {
-    if(shaderName != _shaderInUse) {
-        loadShader(shaderName);
-        _shaderInUse = shaderName;
+    //getting shader pointer/loading shader if not already loaded
+    if(getShader(shaderName).get()) {
+        _shader = getShader(shaderName);
+    } else {
+        _shader = loadShader(shaderName);
+    }
+    
+    //setting new shader for material of specified model
+    Model::GroupMap &groups = getModel(modelName)->getGroups();
+    for (auto i = groups.begin(); i != groups.end(); ++i)
+    {
+        Geometry &geometry = i->second;
+        MaterialPtr material = geometry.getMaterial();
+        material->setShader(_shader);
     }
 }
 
@@ -198,6 +209,6 @@ void DemoSceneManager::draw(double deltaT)
     
     _modelMatrix = translation;
     
-    useShader("test");
+    useShader("test", "tunnel6");
     drawModel("tunnel6");
 }
