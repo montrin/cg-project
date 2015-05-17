@@ -152,8 +152,7 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             
             shader->setUniform("EyePos", _eyePos);
             
-            shader->setUniform("LightPos", vmml::vec4f(0.f, 10.f, 10.f, 1.f));
-
+            shader->setUniform("LightPos", vmml::vec4f(2.f, 2.f, 13.0f, 0.f));
             shader->setUniform("LightDir", vmml::vec4f(-2.f, -2.f, -13.0f, 0.f));
 
 //                       shader->setUniform("LightPos", _eyePos);
@@ -245,6 +244,12 @@ void DemoSceneManager::draw(double deltaT)
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
     drawModel("sphere");
+    popModelMatrix();
+    
+    //Sky
+    pushModelMatrix();
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    drawModel("sky");
     popModelMatrix();
     
     //Tunnel
