@@ -246,12 +246,16 @@ void DemoSceneManager::draw(double deltaT)
     drawModel("sphere");
     popModelMatrix();
     
-
+    //Sky
+    pushModelMatrix();
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    drawModel("sky");
+    popModelMatrix();
+    
     //Tunnel
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     //useShader("test", "tunnel6");
-    drawModel("sky");
     drawModel("tunnel6");
     popModelMatrix();
 }
