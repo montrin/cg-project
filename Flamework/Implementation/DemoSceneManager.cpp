@@ -99,10 +99,11 @@ void DemoSceneManager::initialize(size_t width, size_t height)
         _projectionMatrix = perspective(70.0f, 4.0f/3.0, -1.0f, 100.0f);
 //    _projectionMatrix = vmml::mat4f::IDENTITY;
     
-    //    loadModel("quad.obj", false, false);
+//        loadModel("quad.obj", false, false);
     //    loadModel("guy.obj", true, true);
 //    loadModel("tunnel2.obj", true, true);
 //    loadModel("tunnel4.obj", true, true);
+   loadModel("sky.obj", true, true);
     loadModel("tunnel6.obj", true, true);
     loadModel("sphere.obj", true, true);
     //    loadSound("test.mp3");
@@ -221,13 +222,13 @@ void DemoSceneManager::draw(double deltaT)
     _time += deltaT;
     float angle = _time * .1;   // .1 radians per second
     
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClearColor(0.0f, 0.8f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     
     glCullFace(GL_BACK);
-        glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
 
     Gyro *gyro = Gyro::getInstance();
     gyro->read();
@@ -250,6 +251,8 @@ void DemoSceneManager::draw(double deltaT)
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     //useShader("test", "tunnel6");
+
+    drawModel("sky");
     drawModel("tunnel6");
     popModelMatrix();
 }
