@@ -239,6 +239,13 @@ void DemoSceneManager::draw(double deltaT)
     
     _modelMatrix = vmml::mat4f::IDENTITY;
     
+    GLint oldFBO;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+    util::log(boost::lexical_cast<std::string>(oldFBO));
+    
+    FBO.generateFBO(1536, 2048);
+    FBO.bind();
+    
     //Sun
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
@@ -252,12 +259,13 @@ void DemoSceneManager::draw(double deltaT)
     drawModel("sky");
     popModelMatrix();
     
+    FBO.unbind();
+    
     //Tunnel
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     //useShader("test", "tunnel6");
 
-    drawModel("sky");
     drawModel("tunnel6");
     popModelMatrix();
 }

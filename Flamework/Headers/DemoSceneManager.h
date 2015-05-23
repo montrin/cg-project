@@ -12,6 +12,7 @@
 #include "SceneManager.h"
 #include "ITouchHandler.h"
 #include "IScaleHandler.h"
+#include "Framebuffer.h"
 
 #include <stack>
 
@@ -64,6 +65,8 @@ private:
     float _cameraRotation;
     
     ShaderPtr _shader;
+    
+    Framebuffer FBO;
 };
 
 

@@ -48,7 +48,7 @@ void Framebuffer::generateFBO(unsigned int fboWidth, unsigned int fboHeight) {
     setupDepthRenderBuffer(fboWidth, fboHeight);
     
     //attach to framebuffer/renderbuffer
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0 /*-->mipmap level, 0 is highest?*/);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0 /*-->mipmap level 0*/);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthTexture);
     
     //Check for FBO completeness
@@ -58,9 +58,6 @@ void Framebuffer::generateFBO(unsigned int fboWidth, unsigned int fboHeight) {
         std::fprintf(stderr, "Error: incomplete framebuffer\n");
         std::terminate();
     }
-    
-    //unbind framebuffer
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 GLuint Framebuffer::getColorTexture() {
@@ -81,6 +78,6 @@ void Framebuffer::bind() {
 }
 
 void Framebuffer::unbind() {
-    //0 is the default framebuffer
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    //1 is the default framebuffer of iOS/Flamework
+    glBindFramebuffer(GL_FRAMEBUFFER, 1);
 }
