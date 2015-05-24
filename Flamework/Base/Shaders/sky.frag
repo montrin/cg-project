@@ -78,6 +78,7 @@ void main()
     lowp vec4 color = texture2D(DiffuseMap, texCoordVarying.st);
     specularResult = specularResult * texture2D(SpecularMap, texCoordVarying.st);
    gl_FragColor = (ambientResult + diffuseResult) * color  + specularResult;
+//    skyOutputColor = (ambientResult + diffuseResult) * color  + specularResult;
 //    gl_FragColor = (ambientResult) * color;
    
 }

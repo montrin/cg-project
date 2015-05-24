@@ -239,13 +239,13 @@ void DemoSceneManager::draw(double deltaT)
     
     _modelMatrix = vmml::mat4f::IDENTITY;
     
-    GLint oldFBO;
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
-    util::log(boost::lexical_cast<std::string>(oldFBO));
-    
-    FBO.generateFBO(1536, 2048);
-    FBO.bind();
-    
+//    GLint oldFBO;
+//    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+//    util::log(boost::lexical_cast<std::string>(oldFBO));
+//    
+//    FBO.generateFBO(384, 512);
+//    FBO.bind();
+
     //Sun
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
@@ -256,16 +256,31 @@ void DemoSceneManager::draw(double deltaT)
     //Sky
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    useShader("sky", "sky");
     drawModel("sky");
+//    FBO.unbind(oldFBO);
+
+//    useShader("test", "sky");
+//    drawModel("sky");
     popModelMatrix();
-    
-    FBO.unbind();
-    
+
+//    Framebuffer fbo2;
+//    fbo2.generateFBO(384, 512);
+//    fbo2.bind();
+
+//    drawModel("sky");
+
+//    FBO.unbind(oldFBO);
     //Tunnel
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-    //useShader("test", "tunnel6");
-
+    useShader("Material003", "tunnel6");
+    drawModel("tunnel6");
+    popModelMatrix();
+    useShader("hblur", "tunnel6");
+    drawModel("tunnel6");
+    popModelMatrix();
+    useShader("vblur", "tunnel6");
     drawModel("tunnel6");
     popModelMatrix();
 }

@@ -1,4 +1,4 @@
-
+#extension GL_EXT_shader_framebuffer_fetch : require
 uniform mediump mat4 ViewMatrix;
 uniform mediump mat4 ModelMatrix;
 uniform mediump mat4 ProjectionMatrix;
@@ -30,6 +30,10 @@ varying lowp vec4 texCoordVarying;
 varying mediump vec4 posVarying;        // pos in world space
 varying mediump vec3 normalVarying;     // normal in world space
 varying mediump vec3 tangentVarying;    // tangent in world space
+
+#define kBlendModeDifference 1
+#define kBlendModeOverlay    2
+#define BlendOverlay(a, b) ( (b<0.5) ? (2.0*b*a) : (1.0-2.0*(1.0-a)*(1.0-b)) )
 
 void main()
 {
@@ -75,10 +79,16 @@ void main()
         
     }
     
-    lowp vec4 color = texture2D(DiffuseMap, texCoordVarying.st);
-    specularResult = specularResult * texture2D(SpecularMap, texCoordVarying.st);
+//    lowp vec4 color = texture2D(DiffuseMap, texCoordVarying.st);
+//    specularResult = specularResult * texture2D(SpecularMap, texCoordVarying.st);
     //gl_FragColor = (ambientResult + diffuseResult) * color  + specularResult;
-    //    gl_FragColor = (ambientResult) * color;
-    gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+    lowp vec4 sourceColor = vec4(1.0,0.0,0.0,1.0);
+    //    gl_FragColor = (ambientResult) * c;olor;
+    lowp vec4 destColor = gl_LastFragData[0];
+    gl_FragColor.r = BlendOverlay(sourceColor.r, destColor.r);
+    gl_FragColor.g = BlendOverlay(sourceColor.g, destColor.g);
+    gl_FragColor.b = BlendOverlay(sourceColor.b, destColor.b);
+    gl_FragColor.a = sourceColor.a;
+//    gl_FragColor = destColor;
     
 }

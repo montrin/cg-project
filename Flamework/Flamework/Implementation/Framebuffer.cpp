@@ -75,9 +75,11 @@ void Framebuffer::resize(unsigned int fboWidth, unsigned int fboHeight) {
 
 void Framebuffer::bind() {
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
+    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }
 
-void Framebuffer::unbind() {
+void Framebuffer::unbind(GLint &defaultFBO) {
     //1 is the default framebuffer of iOS/Flamework
     glBindFramebuffer(GL_FRAMEBUFFER, 1);
+    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }

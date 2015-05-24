@@ -1,5 +1,5 @@
 # Blender MTL File: 'tunnel6.blend'
-# Material Count: 1
+# Material Count: 3
 
 newmtl Material003
 Ns 96.078431
@@ -12,3 +12,27 @@ d 1.000000
 map_Kd diffuse6.png
 map_Bump normal6.png
 map_Ks specular6.png
+
+newmtl hblur
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+#Ni 1.000000
+d 1.000000
+#illum 2
+#map_Kd diffuse6.png
+#map_Bump normal6.png
+#map_Ks specular6.png
+
+newmtl vblur
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+#Ni 1.000000
+d 1.000000
+#illum 2
+#map_Kd diffuse6.png
+#map_Bump normal6.png
+#map_Ks specular6.png

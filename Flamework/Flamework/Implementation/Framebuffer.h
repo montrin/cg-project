@@ -48,7 +48,7 @@ public:
     void bind();
 				
     //unbind framebuffer from pipeline. We will call this method in the render loop
-    void unbind();
+    void unbind(GLint &defaultFBO);
 };
 
 #endif
