@@ -82,7 +82,7 @@ void main()
 //    lowp vec4 color = texture2D(DiffuseMap, texCoordVarying.st);
 //    specularResult = specularResult * texture2D(SpecularMap, texCoordVarying.st);
     //gl_FragColor = (ambientResult + diffuseResult) * color  + specularResult;
-    lowp vec4 sourceColor = vec4(1.0,0.0,0.0,1.0);
+    lowp vec4 sourceColor = vec4(1.0,1.0,0.0,1.0);
     //    gl_FragColor = (ambientResult) * c;olor;
     lowp vec4 destColor = gl_LastFragData[0];
     gl_FragColor.r = BlendOverlay(sourceColor.r, destColor.r);

@@ -1,13 +1,13 @@
 //
-//  DemoSceneManager.h
+//  StartSceneManager.h
 //  Framework
 //
-//  Created by David Steiner on 4/28/14.
+//  Created by Monica Trink 25 May 15
 //
 //
 
-#ifndef FRAMEWORK_DEMO_SCENE_MANAGER_H
-#define FRAMEWORK_DEMO_SCENE_MANAGER_H
+#ifndef FRAMEWORK_START_SCENE_MANAGER_H
+#define FRAMEWORK_START_SCENE_MANAGER_H
 
 #include "SceneManager.h"
 #include "ITouchHandler.h"
@@ -18,13 +18,13 @@
 
 class Application;
 
-class DemoSceneManager: public SceneManager, public ITouchHandler, public IScaleHandler
+class StartSceneManager: public SceneManager, public ITouchHandler, public IScaleHandler
 {
 public:
     typedef std::stack< vmml::mat4f >   MatrixStack;
-
-    DemoSceneManager(Application *application);
-    virtual ~DemoSceneManager();
+    
+    StartSceneManager(Application *application);
+    virtual ~StartSceneManager();
     
     virtual void onTouchBegan(float x, float y);
     virtual void onTouchMoved(float x, float y);
@@ -38,7 +38,7 @@ public:
     virtual void draw(double deltaT);
     
     void drawModel(const std::string &name, GLenum mode = GL_TRIANGLES);
-
+    
     void pushModelMatrix();
     void popModelMatrix();
     void transformModelMatrix(const vmml::mat4f &t);
@@ -47,7 +47,7 @@ public:
     
 private:
     double _time;
-
+    
     vmml::vec2f _scrolling;
     vmml::vec2f _lScrollPos;
     vmml::vec2f _scaling;
@@ -64,7 +64,9 @@ private:
     float _cameraForward;
     float _cameraRotation;
     
-    ShaderPtr _shader;    
+    ShaderPtr _shader;
+    
+    Framebuffer FBO;
 };
 
 

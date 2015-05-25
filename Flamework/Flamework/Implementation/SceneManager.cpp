@@ -113,6 +113,15 @@ ModelPtr SceneManager::createModel(const std::string &name, const ModelData &mod
     return model;
 }
 
+FramebufferPtr SceneManager::createFBO()
+{
+    FramebufferPtr fbo;
+    if (fbo) return fbo;
+    
+    fbo = FramebufferPtr(new Framebuffer());
+    return fbo;
+}
+
 ShaderPtr SceneManager::createShader(const std::string &name, const ShaderData &shaderData)
 {
     ShaderPtr &shader = _shaders[name];

@@ -8,10 +8,12 @@
 
 #include "Application.h"
 #include "DemoSceneManager.h"
+#include "StartSceneManager.h"
 
 Application::Application()
     : _sceneManager(new DemoSceneManager(this))
-    , _physicsManager(new PhysicsManager(this))
+     ,_physicsManager(new PhysicsManager(this))
+//    , _startSceneManager (new StartSceneManager(this))
 {
     
 }
@@ -20,12 +22,14 @@ Application::~Application()
 {
     delete _sceneManager;
     delete _physicsManager;
+    //delete _startSceneManager;
 }
 
 void Application::initialize(size_t width, size_t height)
 {
     _sceneManager->initialize(width, height);
     _physicsManager->initialize();
+      //  _startSceneManager->initialize(width, height);
     
 }
 
@@ -38,7 +42,7 @@ void Application::update(double deltaT)
 
 void Application::draw(double deltaT)
 {
-    
+   // _startSceneManager->draw(deltaT);
     _sceneManager->draw(deltaT);
 
 }

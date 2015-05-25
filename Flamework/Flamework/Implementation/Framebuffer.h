@@ -51,4 +51,5 @@ public:
     void unbind(GLint &defaultFBO);
 };
 
+typedef std::shared_ptr<Framebuffer> FramebufferPtr;
 #endif

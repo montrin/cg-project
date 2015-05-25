@@ -36,14 +36,16 @@ void main()
     }
     else if (texCoordVarying.x>=(vx_offset+0.01))
     {
-//        tc = texture2D(sceneTex, texCoordVarying.xy).rgb;
-        tc = texture2D(DiffuseMap, texCoordVarying.xy).rgb;
+        tc = texture2D(sceneTex, texCoordVarying.xy).rgb;
+//        tc = texture2D(DiffuseMap, texCoordVarying.xy).rgb;
     }
-    lowp vec4 sourceColor = vec4(tc, 1.0);
+//    lowp vec4 sourceColor = vec4(tc, 1.0);
+    lowp vec4 sourceColor = vec4(1.0,0.0,0.0,1.0);
     lowp vec4 destColor = gl_LastFragData[0];
-    gl_FragColor.r = BlendOverlay(sourceColor.r, destColor.r);
-    gl_FragColor.g = BlendOverlay(sourceColor.g, destColor.g);
-    gl_FragColor.b = BlendOverlay(sourceColor.b, destColor.b);
-    gl_FragColor.a = sourceColor.a;    
+//    gl_FragColor.r = BlendOverlay(sourceColor.r, destColor.r);
+//    gl_FragColor.g = BlendOverlay(sourceColor.g, destColor.g);
+//    gl_FragColor.b = BlendOverlay(sourceColor.b, destColor.b);
+//    gl_FragColor.a = sourceColor.a;
+    gl_FragColor = sourceColor;
 }
 

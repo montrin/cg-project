@@ -14,6 +14,8 @@ varying lowp vec4 texCoordVarying;
 
 void main()
 {
+
+    
     offset[0] = 0.0;
     offset[1] = 1.3846153846;
     offset[2] = 3.2307692308;

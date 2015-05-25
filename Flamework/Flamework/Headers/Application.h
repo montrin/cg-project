@@ -49,6 +49,7 @@ public:
     
 private:
     SceneManager     *_sceneManager;
+    SceneManager     *_startSceneManager;
     PhysicsManager      *_physicsManager;
     
     std::map< std::string, SoundPtr >   _soundMap;
