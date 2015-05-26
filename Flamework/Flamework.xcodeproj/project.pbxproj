@@ -62,6 +62,8 @@
 		283D33F312AEDA3D00C06CB4 /* FrameworkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 283D33F212AEDA3D00C06CB4 /* FrameworkViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
+		6270BD701B149FDA0054DAA5 /* quad2.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270BD6F1B149FDA0054DAA5 /* quad2.obj */; };
+		6270BD721B14A18D0054DAA5 /* quad2.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 6270BD711B14A18D0054DAA5 /* quad2.mtl */; };
 		F4496CE71B0534D700531FF7 /* test.frag in Resources */ = {isa = PBXBuildFile; fileRef = F4496CE61B0534D700531FF7 /* test.frag */; };
 		F4496CE91B0534E300531FF7 /* test.vert in Resources */ = {isa = PBXBuildFile; fileRef = F4496CE81B0534E300531FF7 /* test.vert */; };
 		F449BCAA1B07A1FC001E8F8F /* default.frag in Resources */ = {isa = PBXBuildFile; fileRef = F449BCA91B07A1FC001E8F8F /* default.frag */; };
@@ -175,6 +177,8 @@
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* Flamework_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flamework_Prefix.pch; sourceTree = "<group>"; };
+		6270BD6F1B149FDA0054DAA5 /* quad2.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quad2.obj; sourceTree = "<group>"; };
+		6270BD711B14A18D0054DAA5 /* quad2.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = quad2.mtl; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Flamework-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Flamework-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		F4496CE61B0534D700531FF7 /* test.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = test.frag; sourceTree = "<group>"; };
 		F4496CE81B0534E300531FF7 /* test.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = test.vert; sourceTree = "<group>"; };
@@ -606,6 +610,8 @@
 				1009D9A01AF375E3006AFF55 /* tunnel2 */,
 				F855EF2D1AC0D47400B32C23 /* guy */,
 				F87C33271910561A00E8A523 /* quad.obj */,
+				6270BD6F1B149FDA0054DAA5 /* quad2.obj */,
+				6270BD711B14A18D0054DAA5 /* quad2.mtl */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -795,6 +801,7 @@
 				10C2575D1AFA400C003E5E1B /* Material002.frag in Resources */,
 				100F5DA61AF5241900FD2257 /* specular7.png in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				6270BD701B149FDA0054DAA5 /* quad2.obj in Resources */,
 				F87C33491910561A00E8A523 /* test.mp3 in Resources */,
 				10C257581AFA2565003E5E1B /* tunnel4.vert in Resources */,
 				109738351B088E7C0034A6FD /* sky.vert in Resources */,
@@ -817,6 +824,7 @@
 				105E86041B123C44005AEECA /* vblur.frag in Resources */,
 				F8ED69F416E64F7400E6D6CA /* Default.png in Resources */,
 				100F5DA41AF5241900FD2257 /* diffuse7.png in Resources */,
+				6270BD721B14A18D0054DAA5 /* quad2.mtl in Resources */,
 				100F5DA81AF5241900FD2257 /* tunnel3.obj in Resources */,
 				1009D9AD1AF375E3006AFF55 /* tunnel2.mtl in Resources */,
 				F87C333D1910561A00E8A523 /* quad.obj in Resources */,

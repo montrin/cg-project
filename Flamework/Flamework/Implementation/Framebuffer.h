@@ -11,6 +11,8 @@
 
 #include <string>
 #include "Framework_GL.h"
+#include "TextureData.h"
+#include "Texture.h"
 
 class Framebuffer {
     
@@ -27,7 +29,6 @@ private:
     
     //generate depth buffer
     void setupDepthRenderBuffer(unsigned int fboWidth, unsigned int fboHeight);
-    
 public:
     Framebuffer();
     ~Framebuffer();
@@ -37,7 +38,7 @@ public:
     
     //return color texture from the framebuffer
     GLuint getColorTexture();
-    
+    void textureBind(GLint texUnit = GL_TEXTURE0);
     //return depth texture from the framebuffer
     GLuint getDepthTexture();
     

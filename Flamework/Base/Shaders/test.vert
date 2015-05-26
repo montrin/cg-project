@@ -39,5 +39,5 @@ void main()
     tangentVarying = normalize(NormalMatrix * Tangent);
     texCoordVarying = TexCoord;
     
-    gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
+    gl_Position =   posVarying;
 }

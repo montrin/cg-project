@@ -94,13 +94,19 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     _forwardSpeed = 1.0f;
     _cameraRotation = M_PI_F;
     
+    GLint oldFBO;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
+    util::log(boost::lexical_cast<std::string>(oldFBO));
+   
+   fbo.generateFBO(768, 1024);
+    
     _camera.moveCamera(_cameraForward);
     //_camera.rotateCamera(vmml::vec3f::UNIT_Y, _cameraRotation);
         _projectionMatrix = perspective(70.0f, 4.0f/3.0, -1.0f, 100.0f);
 //    _projectionMatrix = vmml::mat4f::IDENTITY;
     
-//        loadModel("quad.obj", false, false);
-    //    loadModel("guy.obj", true, true);
+        loadModel("quad2.obj", false, false);
+//    loadModel("guy.obj", true, true);
 //    loadModel("tunnel2.obj", true, true);
 //    loadModel("tunnel4.obj", true, true);
    loadModel("sky.obj", true, true);
@@ -119,6 +125,8 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     TexturePtr sphereOutTexPtr = createTexture();
     _textures.insert(std::make_pair<std::string,TexturePtr>("sphereTexture",sphereOutTexPtr));
     
+    fbo.bind();
+
 }
 
 
@@ -178,7 +186,7 @@ void DemoSceneManager::drawModel(const std::string &name, const std::string &tex
             
             std::unordered_map<std::string,TexturePtr>::const_iterator got = _textures.find(textureName);
             if(got->second){
-                shader->setUniform("sceneTex", got->second);
+                shader->setUniform("texScene", got->second);
             }
             
         }
@@ -190,6 +198,50 @@ void DemoSceneManager::drawModel(const std::string &name, const std::string &tex
         
     }
 }
+
+
+void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
+{
+    Model::GroupMap &groups = getModel(name)->getGroups();
+    for (auto i = groups.begin(); i != groups.end(); ++i)
+    {
+        Geometry &geometry = i->second;
+        MaterialPtr material = geometry.getMaterial();
+        ShaderPtr shader = material->getShader();
+        if (shader.get())
+        {
+            shader->setUniform("ProjectionMatrix", _projectionMatrix);
+            shader->setUniform("ViewMatrix", _viewMatrix);
+            shader->setUniform("ModelMatrix", _modelMatrix);
+            
+            vmml::mat3f normalMatrix;
+            vmml::compute_inverse(vmml::transpose(vmml::mat3f(_modelMatrix)), normalMatrix);
+            shader->setUniform("NormalMatrix", normalMatrix);
+            
+            shader->setUniform("EyePos", _eyePos);
+            
+            shader->setUniform("LightPos", vmml::vec4f(2.f, 2.f, 23.0f, 0.f));
+            shader->setUniform("LightDir", vmml::vec4f(-2.f, -2.f, -23.0f, 0.f));
+            
+            //                       shader->setUniform("LightPos", _eyePos);
+            shader->setUniform("Ia", vmml::vec3f(1.f));
+            shader->setUniform("Id", vmml::vec3f(1.f));
+            shader->setUniform("Is", vmml::vec3f(1.f));
+            
+            shader->setUniform("rt_w", 200);
+            shader->setUniform("rt_h", 200);
+            shader->setUniform("vx_offset", 10);
+                        
+        }
+        else
+        {
+            util::log("No shader available.", util::LM_WARNING);
+        }
+        geometry.draw(mode);
+        
+    }
+}
+
 
 void DemoSceneManager::pushModelMatrix()
 {
@@ -259,12 +311,6 @@ void DemoSceneManager::draw(double deltaT)
     
     _modelMatrix = vmml::mat4f::IDENTITY;
     
-    GLint oldFBO;
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
-    util::log(boost::lexical_cast<std::string>(oldFBO));
-    
-    Framebuffer fbo;
-    fbo.generateFBO(1024, 768);
 
     //Sky
     pushModelMatrix();
@@ -274,32 +320,32 @@ void DemoSceneManager::draw(double deltaT)
     drawModel("sky","skyTexture");
     popModelMatrix();
 
-    //render sky in red
-    Framebuffer fbo2;
-    fbo2.generateFBO(1024, 768);
-    pushModelMatrix();
-    useShader("test", "sky");
-    drawModel("sky","skyTexture");
-    popModelMatrix();
-
-    
-    //horizontal blur
-    //    pushModelMatrix();
-    Framebuffer fbo3;
-    fbo3.generateFBO(1024, 768);
-
-    useShader("hblur", "sky");
-    drawModel("sky","skyTexture");
-    popModelMatrix();
-    
-    //<------ final scene ----->
-    fbo.unbind();
-    
-    //draw final sky
+//    //render sky in red
+//    Framebuffer fbo2;
+//    fbo2.generateFBO(1024, 768);
 //    pushModelMatrix();
-    useShader("vblur", "sky");
-    drawModel("sky","skyTexture");
-    popModelMatrix();
+//    useShader("test", "sky");
+//    drawModel("sky","skyTexture");
+//    popModelMatrix();
+//
+//    
+//    //horizontal blur
+//    //    pushModelMatrix();
+//    Framebuffer fbo3;
+//    fbo3.generateFBO(1024, 768);
+//
+//    useShader("hblur", "sky");
+//    drawModel("sky","skyTexture");
+//    popModelMatrix();
+//    
+//    //<------ final scene ----->
+//    fbo.unbind();
+//    
+//    //draw final sky
+////    pushModelMatrix();
+//    useShader("vblur", "sky");
+//    drawModel("sky","skyTexture");
+//    popModelMatrix();
 
     //Tunnel
     pushModelMatrix();
@@ -320,7 +366,15 @@ void DemoSceneManager::draw(double deltaT)
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
-    drawModel("sphere","");
+    drawModel("sphere");
     popModelMatrix();
-
+    
+    fbo.unbind();
+    glBindTexture(GL_TEXTURE_2D, fbo.getColorTexture());
+    pushModelMatrix();
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
+    //transformModelMatrix(vmml::create_scaling(vmml::vec3f(0.4)));
+    useShader("test","quad2");
+    drawModel("quad2");
+    popModelMatrix();
 }
