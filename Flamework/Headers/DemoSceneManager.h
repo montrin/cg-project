@@ -37,7 +37,8 @@ public:
     virtual void initialize(size_t width, size_t height);
     virtual void draw(double deltaT);
     
-    void drawModel(const std::string &name, GLenum mode = GL_TRIANGLES);
+//    void drawModel(const std::string &name, GLenum mode = GL_TRIANGLES);
+    void drawModel(const std::string &name,  const std::string &textureName, GLenum mode = GL_TRIANGLES);
 
     void pushModelMatrix();
     void popModelMatrix();
@@ -64,7 +65,8 @@ private:
     float _cameraForward;
     float _cameraRotation;
     
-    ShaderPtr _shader;    
+    ShaderPtr _shader;
+    Textures _textures;    
 };
 
 

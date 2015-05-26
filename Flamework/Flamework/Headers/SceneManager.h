@@ -34,7 +34,6 @@ public:
     typedef std::unordered_map< std::string, MaterialPtr >  Materials;
     typedef std::unordered_map< std::string, ModelPtr >     Models;
     typedef std::unordered_map< std::string, SoundPtr >     Sounds;
-    typedef std::unordered_map< std::string, FramebufferPtr >     Framebuffers;
     
     SceneManager(Application *application);
     virtual ~SceneManager();
@@ -64,7 +63,6 @@ public:
     virtual SoundPtr    getSound(const std::string &name);
     
     virtual Application *getApplication();
-    virtual FramebufferPtr createFBO();
     
 private:
     Shaders     _shaders;

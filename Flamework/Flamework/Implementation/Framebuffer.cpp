@@ -31,7 +31,6 @@ void Framebuffer::generateColorTexture(unsigned int fboWidth, unsigned int fboHe
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fboWidth, fboHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0/*image initially empty*/);
-
 }
 
 void Framebuffer::setupDepthRenderBuffer(unsigned int fboWidth, unsigned int fboHeight) {
@@ -46,12 +45,10 @@ void Framebuffer::generateFBO(unsigned int fboWidth, unsigned int fboHeight) {
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
     
     generateColorTexture(fboWidth, fboHeight);
+    setupDepthRenderBuffer(fboWidth, fboHeight);
     
     //attach to framebuffer/renderbuffer
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0 /*-->mipmap level 0*/);
-
-    setupDepthRenderBuffer(fboWidth, fboHeight);
-
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthTexture);
     
     //Check for FBO completeness
@@ -78,11 +75,11 @@ void Framebuffer::resize(unsigned int fboWidth, unsigned int fboHeight) {
 
 void Framebuffer::bind() {
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }
 
-void Framebuffer::unbind(GLint &defaultFBO) {
+void Framebuffer::unbind() {
     //1 is the default framebuffer of iOS/Flamework
     glBindFramebuffer(GL_FRAMEBUFFER, 1);
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 }

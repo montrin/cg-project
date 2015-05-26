@@ -15,7 +15,7 @@
 #include "ShaderData.h"
 #include "Framework_GL.h"
 #include "Util.h"
-
+#include "Framebuffer.h"
 #include <boost/lexical_cast.hpp>
 
 using boost::lexical_cast;
@@ -107,6 +107,18 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     loadModel("tunnel6.obj", true, true);
     loadModel("sphere.obj", true, true);
     //    loadSound("test.mp3");
+    
+    //load Textures
+    //load texture
+    TexturePtr skyOutTexPtr = loadTexture("diffuse10.png");
+    _textures.insert(std::make_pair<std::string,TexturePtr>("skyTexture",skyOutTexPtr));
+    
+    TexturePtr tunnelOutTexPtr = loadTexture("diffuse4.png");
+    _textures.insert(std::make_pair<std::string,TexturePtr>("tunnelTexture",tunnelOutTexPtr));
+
+    TexturePtr sphereOutTexPtr = createTexture();
+    _textures.insert(std::make_pair<std::string,TexturePtr>("sphereTexture",sphereOutTexPtr));
+    
 }
 
 
@@ -132,7 +144,7 @@ vmml::mat4f DemoSceneManager::perspective(float fov, float aspect, float near, f
     return perspective;
 }
 
-void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
+void DemoSceneManager::drawModel(const std::string &name, const std::string &textureName, GLenum mode)
 {
     Model::GroupMap &groups = getModel(name)->getGroups();
     for (auto i = groups.begin(); i != groups.end(); ++i)
@@ -160,12 +172,14 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
             
-            shader->setUniform("rt_w", 384);
-            shader->setUniform("rt_h", 512);
-            shader->setUniform("vx_offset", 5);
+            shader->setUniform("rt_w", 200);
+            shader->setUniform("rt_h", 200);
+            shader->setUniform("vx_offset", 10);
             
-            
-            
+            std::unordered_map<std::string,TexturePtr>::const_iterator got = _textures.find(textureName);
+            if(got->second){
+                shader->setUniform("sceneTex", got->second);
+            }
             
         }
         else
@@ -249,75 +263,64 @@ void DemoSceneManager::draw(double deltaT)
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
     util::log(boost::lexical_cast<std::string>(oldFBO));
     
-    FramebufferPtr fbo = createFBO();
-    fbo->generateFBO(384, 512);
-    fbo->bind();
+    Framebuffer fbo;
+    fbo.generateFBO(1024, 768);
 
     //Sky
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+//    transformModelMatrix(vmml::create_scaling(vmml::vec3f(0.1)));
     useShader("sky", "sky");
-    drawModel("sky");
+    drawModel("sky","skyTexture");
     popModelMatrix();
 
     //render sky in red
-    FramebufferPtr fbo2 = createFBO();
-    fbo2->generateFBO(384, 512);
-    fbo2->bind();
+    Framebuffer fbo2;
+    fbo2.generateFBO(1024, 768);
     pushModelMatrix();
     useShader("test", "sky");
-    drawModel("sky");
+    drawModel("sky","skyTexture");
     popModelMatrix();
 
     
     //horizontal blur
-    FramebufferPtr fbo3 = createFBO();
-    fbo3->generateFBO(384, 512);
-    fbo3->bind();
-    pushModelMatrix();
+    //    pushModelMatrix();
+    Framebuffer fbo3;
+    fbo3.generateFBO(1024, 768);
+
     useShader("hblur", "sky");
-    drawModel("sky");
+    drawModel("sky","skyTexture");
     popModelMatrix();
     
     //<------ final scene ----->
-    fbo->unbind(oldFBO);
-
-    //draw final sun
-    pushModelMatrix();
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
-    drawModel("sphere");
-    popModelMatrix();
+    fbo.unbind();
     
     //draw final sky
-    pushModelMatrix();
+//    pushModelMatrix();
     useShader("vblur", "sky");
-    drawModel("sky");
+    drawModel("sky","skyTexture");
     popModelMatrix();
 
-    //    FBO.unbind(oldFBO);
-
-//    useShader("test", "sky");
-//    drawModel("sky");
-//    popModelMatrix();
-
-//    Framebuffer fbo2;
-//    fbo2.generateFBO(384, 512);
-//    fbo2.bind();
-
-//    drawModel("sky");
-
-//    FBO.unbind(oldFBO);
     //Tunnel
-//    pushModelMatrix();
-//    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-//    useShader("Material003", "tunnel6");
-//    drawModel("tunnel6");
+    pushModelMatrix();
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+ //   transformModelMatrix(vmml::create_scaling(vmml::vec3f(0.4)));
+    useShader("Material003", "tunnel6");
+    drawModel("tunnel6","tunnelTexture");
 //    popModelMatrix();
+    
 //    useShader("hblur", "tunnel6");
 //    drawModel("tunnel6");
 //    popModelMatrix();
 //    useShader("vblur", "tunnel6");
 //    drawModel("tunnel6");
-//    popModelMatrix();
+    popModelMatrix();
+    
+    //draw final sun
+    pushModelMatrix();
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
+    drawModel("sphere","");
+    popModelMatrix();
+
 }
