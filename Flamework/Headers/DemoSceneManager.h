@@ -68,6 +68,9 @@ private:
     ShaderPtr _shader;
     Textures _textures;
     Framebuffer fbo;
+    Framebuffer fbo2;
+    Framebuffer fbo3;
+    
 };
 
 

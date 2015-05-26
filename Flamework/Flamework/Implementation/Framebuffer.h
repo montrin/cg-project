@@ -50,6 +50,9 @@ public:
 				
     //unbind framebuffer from pipeline. We will call this method in the render loop
     void unbind();
+    
+    // sets the texture of the fbo to GL_TEXTURE(iBuffer)
+    void setActiveTexture(int iBuffer);
 };
 
 #endif

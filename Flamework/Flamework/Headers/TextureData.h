@@ -19,6 +19,7 @@ class TextureData
 {
 public:
     explicit TextureData(const std::string &fileName);
+    
     TextureData();
     
     TextureData &load(const std::string &fileName);
@@ -27,7 +28,6 @@ public:
     GLsizei         getHeight()     const   { return _height;       }
     GLenum          getFormat()     const   { return _format;       }
     ImageDataPtr    getImageData()  const   { return _imageData;    }
-    
 private:
     GLsizei         _width;
     GLsizei         _height;

@@ -26,45 +26,19 @@ void Framebuffer::destroy() {
 }
 
 void Framebuffer::generateColorTexture(unsigned int fboWidth, unsigned int fboHeight) {
-
-//    glGenTextures(1, &colorTexture);
-//    glBindTexture(GL_TEXTURE_2D, colorTexture);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fboWidth, fboHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0/*image initially empty*/);
     
     glGenTextures(1, &colorTexture);
     glBindTexture(GL_TEXTURE_2D, colorTexture);
     
-    if (colorTexture)
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fboWidth, fboHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0/*image initially empty*/);
-        
-#ifndef USE_GL_ES2
-        glGenerateMipmapOES(GL_TEXTURE_2D);
-#else
-        glGenerateMipmap(GL_TEXTURE_2D);
-#endif
-        
-    }
-//    GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
-//    r glDra
-
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fboWidth, fboHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL/*image initially empty*/);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Framebuffer::textureBind(GLint texUnit)
-{
-    glActiveTexture(texUnit);
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, colorTexture);
-}
+
 
 void Framebuffer::setupDepthRenderBuffer(unsigned int fboWidth, unsigned int fboHeight) {
     glGenRenderbuffers(1, &depthTexture);
@@ -75,24 +49,18 @@ void Framebuffer::setupDepthRenderBuffer(unsigned int fboWidth, unsigned int fbo
 void Framebuffer::generateFBO(unsigned int fboWidth, unsigned int fboHeight) {
     //Generate a framebuffer object(FBO) and bind it to the pipeline
     glGenFramebuffers(1, &FBO);
-//    glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     generateColorTexture(fboWidth, fboHeight);
-//    textureBind();
     setupDepthRenderBuffer(fboWidth, fboHeight);
     
-    //attach to framebuffer/renderbuffer
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0 /*-->mipmap level 0*/);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthTexture);
+
+//  attach to framebuffer/renderbuffer
+//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0 /*-->mipmap level 0*/);
+//  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthTexture);
     
     //Check for FBO completeness
-    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    
-    if(GL_FRAMEBUFFER_COMPLETE != status) {
-        std::fprintf(stderr, "Error: incomplete framebuffer\n");
-        std::terminate();
-    }
+
 }
 
 GLuint Framebuffer::getColorTexture() {
@@ -111,7 +79,23 @@ void Framebuffer::resize(unsigned int fboWidth, unsigned int fboHeight) {
 void Framebuffer::bind() {
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0);
+}
 
+void Framebuffer::setActiveTexture(int iBuffer){
+    if (iBuffer==0) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, colorTexture);
+    }else if (iBuffer == 1){
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, colorTexture);
+    }else if (iBuffer == 2){
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, colorTexture);
+    }else{
+        glActiveTexture(GL_TEXTURE3);
+        glBindTexture(GL_TEXTURE_2D, colorTexture);
+    }
 }
 
 void Framebuffer::unbind() {
