@@ -70,6 +70,7 @@ private:
     Framebuffer fbo;
     Framebuffer fbo2;
     Framebuffer fbo3;
+    Framebuffer fbo4;
     
 };
 

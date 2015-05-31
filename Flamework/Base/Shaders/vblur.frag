@@ -1,5 +1,5 @@
 //#extension GL_EXT_shader_framebuffer_fetch : require
-uniform sampler2D sceneTex; // 0
+uniform sampler2D sceneTex2; // 0
 uniform sampler2D DiffuseMap;
 uniform mediump float rt_w; // render target width
 uniform mediump float rt_h; // render target height
@@ -28,16 +28,16 @@ void main()
     if (texCoordVarying.x<(vx_offset-0.01))
     {
         lowp vec2 uv = texCoordVarying.xy;
-        tc = texture2D(sceneTex, uv).rgb * weight[0];
+        tc = texture2D(sceneTex2, uv).rgb * weight[0];
         for (int i=1; i<3; i++)
         {
-            tc += texture2D(sceneTex, uv + vec2(offset[i])/rt_w, 0.0).rgb * weight[i];
-            tc += texture2D(sceneTex, uv - vec2(offset[i])/rt_w, 0.0).rgb * weight[i];
+            tc += texture2D(sceneTex2, uv + vec2(offset[i])/rt_w, 0.0).rgb * weight[i];
+            tc += texture2D(sceneTex2, uv - vec2(offset[i])/rt_w, 0.0).rgb * weight[i];
         }
     }
     else if (texCoordVarying.x>=(vx_offset+0.01))
     {
-        tc = texture2D(sceneTex, texCoordVarying.xy).rgb;
+        tc = texture2D(sceneTex2, texCoordVarying.xy).rgb;
   //      tc = texture2D(DiffuseMap, texCoordVarying.xy).rgb;
     }
     lowp vec4 sourceColor = vec4(tc, 1.0);
@@ -47,6 +47,6 @@ void main()
 //    gl_FragColor.g = BlendOverlay(sourceColor.g, destColor.g);
 //    gl_FragColor.b = BlendOverlay(sourceColor.b, destColor.b);
 //    gl_FragColor.a = sourceColor.a;
-    gl_FragColor = sourceColor * destColor;
+    gl_FragColor = sourceColor; //* destColor;
 
 }

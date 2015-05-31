@@ -46,6 +46,6 @@ void main()
 //    gl_FragColor.g = BlendOverlay(sourceColor.g, destColor.g);
 //    gl_FragColor.b = BlendOverlay(sourceColor.b, destColor.b);
 //    gl_FragColor.a = sourceColor.a;
-    gl_FragColor = sourceColor * destColor;
+    gl_FragColor = sourceColor;
 }
 

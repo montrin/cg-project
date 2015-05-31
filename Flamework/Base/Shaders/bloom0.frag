@@ -97,7 +97,10 @@ void main()
     lowp vec4 color2 = texture2D(uTexSource1, texCoordVarying.st);
 
     //lowp vec4 sourceColor = vec4(1.0,1.0,0.0,0.5);
+    if(color2.r <1.0 && color2.g < 1.0 && color2.b < 1.0){
+        color2 = color + color2;
+    }
     
-    gl_FragColor =  color*color2;//*sourceColor;
+    gl_FragColor =  color2;//*sourceColor;
     
 }

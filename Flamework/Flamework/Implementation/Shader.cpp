@@ -152,10 +152,16 @@ void Shader::setUniform(const std::string &name, TexturePtr texture)
     }
 }
 
-void Shader::setUniform(const std::string &name)
+void Shader::setUniform(const std::string &name,int tex, GLuint texture)
 {
     glUseProgram(_programID);
-    
+    GLint loc = findUniformLocation(name);
+    if(loc >= 0){
+        glActiveTexture(GL_TEXTURE0+tex);
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glUniform1i(loc, tex);
+    }
 }
 
 GLint Shader::registerUniform(const std::string &name)

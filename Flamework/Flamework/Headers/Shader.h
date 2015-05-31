@@ -41,7 +41,7 @@ public:
     virtual void setUniform(const std::string &name, const vmml::vec4f &arg);
     virtual void setUniform(const std::string &name, const vmml::vec3f &arg);
     virtual void setUniform(const std::string &name, float arg);
-    virtual void setUniform(const std::string &name);
+    virtual void setUniform(const std::string &name, int tex, GLuint texture);
     virtual void setUniform(const std::string &name, TexturePtr texture);
     
     virtual GLint registerUniform(const std::string &name);

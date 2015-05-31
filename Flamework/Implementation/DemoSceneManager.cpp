@@ -109,9 +109,10 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     loadModel("sphere.obj", true, true);
 //  loadSound("test.mp3");
     
-    fbo.generateFBO(786, 1024);
-    fbo2.generateFBO(786, 1024);
-    fbo3.generateFBO(786, 1024);
+    fbo.generateFBO(768, 1024);
+    fbo2.generateFBO(768, 1024);
+    fbo3.generateFBO(768, 1024);
+    fbo4.generateFBO(768, 1024);
     
 
 }
@@ -168,30 +169,19 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
             
-            shader->setUniform("rt_w", 200);
-            shader->setUniform("rt_h", 200);
+            shader->setUniform("rt_w", 300);
+            shader->setUniform("rt_h", 300);
             shader->setUniform("vx_offset", 10);
             
-            shader->setUniform("uTexSource1");
-            GLint loc = shader->findUniformLocation("uTexSource1");
-            if(loc >= 0){
-                glActiveTexture(GL_TEXTURE0+0);
-                glEnable(GL_TEXTURE_2D);
-                glBindTexture(GL_TEXTURE_2D, fbo.getColorTexture());
-                glUniform1i(loc, 0);
-
-            }
-                
             
-            shader->setUniform("uTexSource2");
-            loc = shader->findUniformLocation("uTexSource2");
-            if(loc >= 0){
-                glActiveTexture(GL_TEXTURE0+1);
-                glEnable(GL_TEXTURE_2D);
-                glBindTexture(GL_TEXTURE_2D, fbo2.getColorTexture());
-                glUniform1i(loc, 1);
-                
-            }
+            shader->setUniform("uTexSource1",0,fbo.getColorTexture());
+                        
+            shader->setUniform("sceneTex", 1, fbo2.getColorTexture());
+            shader->setUniform("sceneTex2", 2, fbo3.getColorTexture());
+            
+            shader->setUniform("uTexSource2",3,fbo4.getColorTexture());
+
+
 
         }
         else
@@ -276,6 +266,7 @@ void DemoSceneManager::draw(double deltaT)
     //Sphere
     //fbo.setActiveTexture(0);
     pushModelMatrix();
+    
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
     drawModel("sphere");
@@ -295,17 +286,31 @@ void DemoSceneManager::draw(double deltaT)
 
     //fbo.setActiveTexture(-1);
     fbo2.bind();
+    //fbo.unbind();
     //fbo.setActiveTexture(0);
     pushModelMatrix();
     useShader("bloom1","quad2");
     drawModel("quad2");
     popModelMatrix();
     //fbo2.setActiveTexture(-1);
-    fbo2.unbind();
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, fbo.getColorTexture());
-    //glActiveTexture(GL_TEXTURE0+1);
-    //glBindTexture(GL_TEXTURE_2D, fbo2.getColorTexture());//    fbo2.setActiveTexture(1);
+    //fbo2.unbind();
+    fbo3.bind();
+    
+    pushModelMatrix();
+    useShader("hblur","quad2");
+    drawModel("quad2");
+    popModelMatrix();
+
+    fbo4.bind();
+    //fbo3.unbind();
+    
+    pushModelMatrix();
+    useShader("vblur","quad2");
+    drawModel("quad2");
+    popModelMatrix();
+    
+    fbo4.unbind();
+
     pushModelMatrix();
     useShader("bloom0","quad2");
     drawModel("quad2");
