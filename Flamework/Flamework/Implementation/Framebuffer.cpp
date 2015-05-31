@@ -83,24 +83,27 @@ void Framebuffer::bind() {
 }
 
 void Framebuffer::setActiveTexture(int iBuffer){
-    if (iBuffer==0) {
+    if (iBuffer==-1) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }else{
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, colorTexture);
-    }else if (iBuffer == 1){
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, colorTexture);
-    }else if (iBuffer == 2){
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, colorTexture);
-    }else{
-        glActiveTexture(GL_TEXTURE3);
-        glBindTexture(GL_TEXTURE_2D, colorTexture);
-    }
+//        glActiveTexture(GL_TEXTURE1);
+//        glBindTexture(GL_TEXTURE_2D, colorTexture);
+}//else if (iBuffer == 2){
+//        glActiveTexture(GL_TEXTURE2);
+//        glBindTexture(GL_TEXTURE_2D, colorTexture);
+//    }else{
+//        glActiveTexture(GL_TEXTURE3);
+//        glBindTexture(GL_TEXTURE_2D, colorTexture);
+//    }
 }
 
 void Framebuffer::unbind() {
     //1 is the default framebuffer of iOS/Flamework
     glBindFramebuffer(GL_FRAMEBUFFER, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
 
 }

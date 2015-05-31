@@ -172,8 +172,26 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             shader->setUniform("rt_h", 200);
             shader->setUniform("vx_offset", 10);
             
-            shader->setUniform("uTexSource1", fbo.getColorTexture());
-            shader->setUniform("uTexSource2", fbo2.getColorTexture());
+            shader->setUniform("uTexSource1");
+            GLint loc = shader->findUniformLocation("uTexSource1");
+            if(loc >= 0){
+                glActiveTexture(GL_TEXTURE0+0);
+                glEnable(GL_TEXTURE_2D);
+                glBindTexture(GL_TEXTURE_2D, fbo.getColorTexture());
+                glUniform1i(loc, 0);
+
+            }
+                
+            
+            shader->setUniform("uTexSource2");
+            loc = shader->findUniformLocation("uTexSource2");
+            if(loc >= 0){
+                glActiveTexture(GL_TEXTURE0+1);
+                glEnable(GL_TEXTURE_2D);
+                glBindTexture(GL_TEXTURE_2D, fbo2.getColorTexture());
+                glUniform1i(loc, 1);
+                
+            }
 
         }
         else
@@ -255,8 +273,8 @@ void DemoSceneManager::draw(double deltaT)
     _modelMatrix = vmml::mat4f::IDENTITY;
     
     fbo.bind();
-
     //Sphere
+    //fbo.setActiveTexture(0);
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
@@ -274,13 +292,22 @@ void DemoSceneManager::draw(double deltaT)
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     drawModel("tunnel6");
     popModelMatrix();
-    fbo.unbind();
-    fbo.setActiveTexture(0);
-    
+
+    //fbo.setActiveTexture(-1);
+    fbo2.bind();
+    //fbo.setActiveTexture(0);
     pushModelMatrix();
     useShader("bloom1","quad2");
     drawModel("quad2");
     popModelMatrix();
-
-    
+    //fbo2.setActiveTexture(-1);
+    fbo2.unbind();
+    //glActiveTexture(GL_TEXTURE0);
+    //glBindTexture(GL_TEXTURE_2D, fbo.getColorTexture());
+    //glActiveTexture(GL_TEXTURE0+1);
+    //glBindTexture(GL_TEXTURE_2D, fbo2.getColorTexture());//    fbo2.setActiveTexture(1);
+    pushModelMatrix();
+    useShader("bloom0","quad2");
+    drawModel("quad2");
+    popModelMatrix();
 }
