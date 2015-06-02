@@ -90,14 +90,16 @@ varying mediump vec4 posVarying;        // pos in world space
 varying mediump vec3 normalVarying;     // normal in world space
 varying mediump vec3 tangentVarying;    // tangent in world space
 
-
 void main()
 {
+//    lowp vec2 xy = texCoordVarying.st;
+//    xy.x = texCoordVarying.x*4.0;
+//    xy.y = texCoordVarying.y*4.0;
     lowp vec4 color = texture2D(uTexSource2, texCoordVarying.st);
     lowp vec4 color2 = texture2D(uTexSource1, texCoordVarying.st);
 
     //lowp vec4 sourceColor = vec4(1.0,1.0,0.0,0.5);
-    if(color2.r <1.0 && color2.g < 1.0 && color2.b < 1.0){
+    if(color2.r <0.9 && color2.g < 0.9 && color2.b < 0.9){
         color2 = color + color2;
     }
     

@@ -35,6 +35,12 @@
 		105E86021B123C2E005AEECA /* vblur.vert in Resources */ = {isa = PBXBuildFile; fileRef = 105E86011B123C2E005AEECA /* vblur.vert */; };
 		105E86041B123C44005AEECA /* vblur.frag in Resources */ = {isa = PBXBuildFile; fileRef = 105E86031B123C44005AEECA /* vblur.frag */; };
 		105E86061B13075A005AEECA /* StartSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 105E86051B13075A005AEECA /* StartSceneManager.cpp */; };
+		1063EB361B1C5C12009692D6 /* lineartonemap.frag in Resources */ = {isa = PBXBuildFile; fileRef = 1063EB351B1C5C12009692D6 /* lineartonemap.frag */; };
+		1063EB381B1C5C33009692D6 /* lineartonemap.vert in Resources */ = {isa = PBXBuildFile; fileRef = 1063EB371B1C5C33009692D6 /* lineartonemap.vert */; };
+		1063EB3A1B1DC0DB009692D6 /* plane.frag in Resources */ = {isa = PBXBuildFile; fileRef = 1063EB391B1DC0DB009692D6 /* plane.frag */; };
+		1063EB3D1B1DC144009692D6 /* plane.vert in Resources */ = {isa = PBXBuildFile; fileRef = 1063EB3C1B1DC144009692D6 /* plane.vert */; };
+		1063EB411B1DDA66009692D6 /* plane.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 1063EB3F1B1DDA66009692D6 /* plane.mtl */; };
+		1063EB421B1DDA66009692D6 /* plane.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1063EB401B1DDA66009692D6 /* plane.obj */; };
 		109738341B088E7C0034A6FD /* sky.frag in Resources */ = {isa = PBXBuildFile; fileRef = 109738321B088E7C0034A6FD /* sky.frag */; };
 		109738351B088E7C0034A6FD /* sky.vert in Resources */ = {isa = PBXBuildFile; fileRef = 109738331B088E7C0034A6FD /* sky.vert */; };
 		1097383C1B088E960034A6FD /* diffuse10.png in Resources */ = {isa = PBXBuildFile; fileRef = 109738371B088E960034A6FD /* diffuse10.png */; };
@@ -148,6 +154,12 @@
 		105E86031B123C44005AEECA /* vblur.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = vblur.frag; sourceTree = "<group>"; };
 		105E86051B13075A005AEECA /* StartSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartSceneManager.cpp; sourceTree = "<group>"; };
 		105E86071B13076C005AEECA /* StartSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartSceneManager.h; sourceTree = "<group>"; };
+		1063EB351B1C5C12009692D6 /* lineartonemap.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lineartonemap.frag; sourceTree = "<group>"; };
+		1063EB371B1C5C33009692D6 /* lineartonemap.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = lineartonemap.vert; sourceTree = "<group>"; };
+		1063EB391B1DC0DB009692D6 /* plane.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.frag; sourceTree = "<group>"; };
+		1063EB3C1B1DC144009692D6 /* plane.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = plane.vert; sourceTree = "<group>"; };
+		1063EB3F1B1DDA66009692D6 /* plane.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plane.mtl; sourceTree = "<group>"; };
+		1063EB401B1DDA66009692D6 /* plane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = plane.obj; sourceTree = "<group>"; };
 		109738321B088E7C0034A6FD /* sky.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.frag; sourceTree = "<group>"; };
 		109738331B088E7C0034A6FD /* sky.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sky.vert; sourceTree = "<group>"; };
 		109738371B088E960034A6FD /* diffuse10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diffuse10.png; sourceTree = "<group>"; };
@@ -357,6 +369,15 @@
 				100F5DA31AF5241900FD2257 /* uvmaptunnel3.jpg */,
 			);
 			path = tunnel3;
+			sourceTree = "<group>";
+		};
+		1063EB3E1B1DDA66009692D6 /* plane */ = {
+			isa = PBXGroup;
+			children = (
+				1063EB3F1B1DDA66009692D6 /* plane.mtl */,
+				1063EB401B1DDA66009692D6 /* plane.obj */,
+			);
+			path = plane;
 			sourceTree = "<group>";
 		};
 		109738361B088E960034A6FD /* sky */ = {
@@ -606,6 +627,7 @@
 		F87C331F1910561A00E8A523 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1063EB3E1B1DDA66009692D6 /* plane */,
 				10A449A61B11D96D00D1D882 /* sphere */,
 				109738361B088E960034A6FD /* sky */,
 				10A1B7901AFB698D00737386 /* tunnel6 */,
@@ -649,6 +671,10 @@
 				10A449AB1B120EE200D1D882 /* hblur.vert */,
 				105E86011B123C2E005AEECA /* vblur.vert */,
 				105E86031B123C44005AEECA /* vblur.frag */,
+				1063EB351B1C5C12009692D6 /* lineartonemap.frag */,
+				1063EB371B1C5C33009692D6 /* lineartonemap.vert */,
+				1063EB391B1DC0DB009692D6 /* plane.frag */,
+				1063EB3C1B1DC144009692D6 /* plane.vert */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -820,6 +846,7 @@
 				105E86001B122176005AEECA /* specular4.png in Resources */,
 				10C2575F1AFA400C003E5E1B /* Material003.frag in Resources */,
 				10C257501AFA2537003E5E1B /* tunnel4.mtl in Resources */,
+				1063EB3D1B1DC144009692D6 /* plane.vert in Resources */,
 				1009D9B21AF3761F006AFF55 /* tunnel2.vert in Resources */,
 				10A1B7981AFB728C00737386 /* diffuse6.png in Resources */,
 				F855EF331AC0D47400B32C23 /* diffuse2.png in Resources */,
@@ -831,6 +858,7 @@
 				F8ED69F416E64F7400E6D6CA /* Default.png in Resources */,
 				100F5DA41AF5241900FD2257 /* diffuse7.png in Resources */,
 				6270BD721B14A18D0054DAA5 /* quad2.mtl in Resources */,
+				1063EB361B1C5C12009692D6 /* lineartonemap.frag in Resources */,
 				100F5DA81AF5241900FD2257 /* tunnel3.obj in Resources */,
 				1009D9AD1AF375E3006AFF55 /* tunnel2.mtl in Resources */,
 				F87C333D1910561A00E8A523 /* quad.obj in Resources */,
@@ -838,9 +866,12 @@
 				F855EF351AC0D47400B32C23 /* guy.obj in Resources */,
 				F449BCAA1B07A1FC001E8F8F /* default.frag in Resources */,
 				1097383C1B088E960034A6FD /* diffuse10.png in Resources */,
+				1063EB411B1DDA66009692D6 /* plane.mtl in Resources */,
 				10A1B7931AFB698D00737386 /* tunnel6.mtl in Resources */,
 				F449BCAC1B07A210001E8F8F /* default.vert in Resources */,
 				F4496CE71B0534D700531FF7 /* bloom1.frag in Resources */,
+				1063EB3A1B1DC0DB009692D6 /* plane.frag in Resources */,
+				1063EB421B1DDA66009692D6 /* plane.obj in Resources */,
 				F855EF341AC0D47400B32C23 /* guy.mtl in Resources */,
 				F8ED69F516E64F7400E6D6CA /* Default@2x.png in Resources */,
 				1009D9AA1AF375E3006AFF55 /* diffuse5.png in Resources */,
@@ -859,6 +890,7 @@
 				1009D9AC1AF375E3006AFF55 /* specular5.png in Resources */,
 				F8ED6AD016E652B800E6D6CA /* ACKNOWLEDGEMENTS in Resources */,
 				F8ED6AD116E652B800E6D6CA /* LICENSE in Resources */,
+				1063EB381B1C5C33009692D6 /* lineartonemap.vert in Resources */,
 				10C2575E1AFA400C003E5E1B /* bloom0.vert in Resources */,
 				105E85FE1B122176005AEECA /* diffuse4.png in Resources */,
 			);

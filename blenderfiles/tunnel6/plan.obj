@@ -1,0 +1,12 @@
+# Blender v2.74 (sub 0) OBJ File: 'tunnel6.blend'
+# www.blender.org
+mtllib plan.mtl
+o Plane
+v -27.018379 -1.523665 3.363302
+v -31.518641 -2.893687 -8.973895
+v -28.033354 3.522759 3.173140
+v -32.533611 2.152738 -9.164057
+usemtl Material.002
+s off
+f 1 2 4
+f 3 1 4

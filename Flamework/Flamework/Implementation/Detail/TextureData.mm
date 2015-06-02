@@ -21,7 +21,7 @@ TextureData &TextureData::load(const std::string &fileName)
     static const size_t BITS_PER_COMPONENT  = 8;
     
     _format = GL_RGBA;
-    
+//    _format = GL_RGBA16F_EXT;
     NSString *fullFileName = [NSString stringWithCString:fileName.c_str()
                                                 encoding:[NSString defaultCStringEncoding]];
     

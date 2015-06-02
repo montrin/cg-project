@@ -34,8 +34,16 @@ void Framebuffer::generateColorTexture(unsigned int fboWidth, unsigned int fboHe
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fboWidth, fboHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL/*image initially empty*/);
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F_EXT, fboWidth, fboHeight, 0, GL_RGBA16F_EXT, GL_HALF_FLOAT_OES, NULL/*image initially empty*/);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fboWidth, fboHeight, 0, GL_RGBA, GL_HALF_FLOAT_OES, NULL/*image initially empty*/);
     glBindTexture(GL_TEXTURE_2D, 0);
+
+#ifndef USE_GL_ES2
+    glGenerateMipmapOES(GL_TEXTURE_2D);
+#else
+    glGenerateMipmap(GL_TEXTURE_2D);
+#endif
+    
 }
 
 

@@ -104,6 +104,7 @@ void DemoSceneManager::initialize(size_t width, size_t height)
 //  _projectionMatrix = vmml::mat4f::IDENTITY;
     
     loadModel("quad2.obj", false, false);
+    loadModel("plane.obj", true, true);
     loadModel("sky.obj", true, true);
     loadModel("tunnel6.obj", true, true);
     loadModel("sphere.obj", true, true);
@@ -113,8 +114,6 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     fbo2.generateFBO(768, 1024);
     fbo3.generateFBO(768, 1024);
     fbo4.generateFBO(768, 1024);
-    
-
 }
 
 
@@ -169,11 +168,10 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
             
-            shader->setUniform("rt_w", 300);
-            shader->setUniform("rt_h", 300);
+            shader->setUniform("rt_w", 600);
+            shader->setUniform("rt_h", 600);
             shader->setUniform("vx_offset", 10);
-            
-            
+                        
             shader->setUniform("uTexSource1",0,fbo.getColorTexture());
                         
             shader->setUniform("sceneTex", 1, fbo2.getColorTexture());
@@ -265,54 +263,74 @@ void DemoSceneManager::draw(double deltaT)
     fbo.bind();
     //Sphere
     //fbo.setActiveTexture(0);
+//    pushModelMatrix();
+//    
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
+//    drawModel("sphere");
+//    popModelMatrix();
+//    
+//    //Sky
+//    pushModelMatrix();
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+//    drawModel("sky");
+//    popModelMatrix();
+//
+    //eye adaption simulation
     pushModelMatrix();
-    
+    glEnable( GL_BLEND );
+    glBlendEquation( GL_FUNC_ADD );
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
-    drawModel("sphere");
+    useShader("plane","plane");
+    drawModel("plane");
     popModelMatrix();
     
-    //Sky
-    pushModelMatrix();
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-    drawModel("sky");
-    popModelMatrix();
-        
-    //Tunnel
+    glDisable(GL_BLEND);
+    //    //Tunnel
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     drawModel("tunnel6");
     popModelMatrix();
-
+    
+    //sprite for eye adapation
+    
     //fbo.setActiveTexture(-1);
     fbo2.bind();
-    //fbo.unbind();
+//    fbo.unbind();
     //fbo.setActiveTexture(0);
     pushModelMatrix();
     useShader("bloom1","quad2");
     drawModel("quad2");
     popModelMatrix();
     //fbo2.setActiveTexture(-1);
-    //fbo2.unbind();
+//    fbo2.unbind();
     fbo3.bind();
-    
+//
     pushModelMatrix();
     useShader("hblur","quad2");
     drawModel("quad2");
     popModelMatrix();
-
+//
     fbo4.bind();
-    //fbo3.unbind();
-    
+//    //fbo3.unbind();
+//    
     pushModelMatrix();
     useShader("vblur","quad2");
     drawModel("quad2");
     popModelMatrix();
-    
+//
     fbo4.unbind();
-
+//    fbo2.bind();
     pushModelMatrix();
     useShader("bloom0","quad2");
     drawModel("quad2");
     popModelMatrix();
+
+//    fbo.unbind();
+//    pushModelMatrix();
+//    useShader("lineartonemap","quad2");
+//    drawModel("quad2");
+//    popModelMatrix();
+
 }
