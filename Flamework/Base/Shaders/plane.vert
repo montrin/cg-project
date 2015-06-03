@@ -31,6 +31,9 @@ varying lowp vec4 texCoordVarying;
 varying mediump vec4 posVarying;        // pos in world space
 varying mediump vec3 normalVarying;     // normal in world space
 varying mediump vec3 tangentVarying;    // tangent in world space
+varying mediump vec4 viewSpace;        //
+
+varying vec2 uv;
 
 void main()
 {
@@ -40,6 +43,8 @@ void main()
     tangentVarying = normalize(NormalMatrix * Tangent);
     texCoordVarying = TexCoord;
     
-    gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
+    viewSpace = ProjectionMatrix * ViewMatrix * posVarying;
 
+    gl_Position = ProjectionMatrix * ViewMatrix * posVarying;
+    uv = (vec2( gl_Position.x, - gl_Position.y ) + vec2(1.0) ) / vec2(2.0);
 }

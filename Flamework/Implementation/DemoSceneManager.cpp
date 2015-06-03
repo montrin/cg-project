@@ -171,7 +171,10 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             shader->setUniform("rt_w", 600);
             shader->setUniform("rt_h", 600);
             shader->setUniform("vx_offset", 10);
-                        
+            
+            //opacity variable for fog shader
+            shader->setUniform("opacity", 1.0f);
+
             shader->setUniform("uTexSource1",0,fbo.getColorTexture());
                         
             shader->setUniform("sceneTex", 1, fbo2.getColorTexture());
@@ -278,6 +281,9 @@ void DemoSceneManager::draw(double deltaT)
 //
     //eye adaption simulation
     pushModelMatrix();
+//    glClearColor(1.0, 1.0, 1.0, 0.0);//white color, same as fog color
+  //  glClearDepthf(1);
+    glEnable(GL_DEPTH_TEST);
     glEnable( GL_BLEND );
     glBlendEquation( GL_FUNC_ADD );
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
@@ -292,8 +298,6 @@ void DemoSceneManager::draw(double deltaT)
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     drawModel("tunnel6");
     popModelMatrix();
-    
-    //sprite for eye adapation
     
     //fbo.setActiveTexture(-1);
     fbo2.bind();
