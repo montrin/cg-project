@@ -39,8 +39,8 @@ public:
     virtual ~SceneManager();
     
     virtual void initialize(size_t width, size_t height) = 0;
-    virtual void draw(double deltaT) = 0;
-    
+//    virtual void draw(double deltaT) = 0;
+    virtual void draw(double deltaT, bool nightView) = 0;
     // ToDo : createFrameBufferObject
     virtual ModelPtr    loadModel(const std::string &fileName, bool flipT = false, bool flipZ = false);
     virtual ShaderPtr   loadShader(const std::string &shaderName);

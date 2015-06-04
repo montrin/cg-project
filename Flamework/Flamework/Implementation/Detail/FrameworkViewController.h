@@ -25,8 +25,11 @@
     int _cPosY;
     int _lPosX;
     int _lPosY;
+    
+    BOOL _nightView;
 }
 
+- (IBAction)nightView:(id)sender;
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;
 @property (nonatomic) NSInteger animationFrameInterval;
 

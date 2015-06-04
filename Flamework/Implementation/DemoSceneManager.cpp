@@ -240,7 +240,7 @@ void DemoSceneManager::useShader(const std::string &shaderName, const std::strin
     }
 }
 
-void DemoSceneManager::draw(double deltaT)
+void DemoSceneManager::draw(double deltaT, bool nightMode)
 {
     _time += deltaT;
     float angle = _time * .1;   // .1 radians per second
@@ -327,14 +327,14 @@ void DemoSceneManager::draw(double deltaT)
     fbo4.unbind();
 //    fbo2.bind();
     pushModelMatrix();
-    useShader("bloom0","quad2");
+    
+    //check if view should render in night mode
+    if(nightMode) {
+        useShader("night","quad2");
+    }else {
+        useShader("bloom0","quad2");
+    }
     drawModel("quad2");
     popModelMatrix();
-
-//    fbo.unbind();
-//    pushModelMatrix();
-//    useShader("lineartonemap","quad2");
-//    drawModel("quad2");
-//    popModelMatrix();
 
 }

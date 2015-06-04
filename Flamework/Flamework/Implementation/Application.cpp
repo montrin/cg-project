@@ -43,8 +43,12 @@ void Application::update(double deltaT)
 void Application::draw(double deltaT)
 {
    // _startSceneManager->draw(deltaT);
-    _sceneManager->draw(deltaT);
+    _sceneManager->draw(deltaT,false);
+}
 
+void Application::draw(double deltaT, bool nightView)
+{
+    _sceneManager->draw(deltaT, nightView);
 }
 
 void Application::destroy()

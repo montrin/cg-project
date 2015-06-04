@@ -35,7 +35,8 @@ public:
     virtual void onScaleEnded(float x, float y);
     
     virtual void initialize(size_t width, size_t height);
-    virtual void draw(double deltaT);
+//    virtual void draw(double deltaT);
+    virtual void draw(double deltaT, bool nightMode);
     
     void drawModel(const std::string &name, GLenum mode = GL_TRIANGLES);
     void drawModel(const std::string &name,  const std::string &textureName, GLenum mode = GL_TRIANGLES);

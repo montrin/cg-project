@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>5DF2F4C4-C35F-4679-985C-86E09E76C205</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Flamework</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>1F06000D4EAE33AC7ECEDF3E6194F39A2DE44C09</key>
 		<string>https://github.com/montrin/cg-project.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Flamework/Flamework.xcodeproj</string>
+	<string>Flamework/Flamework.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>1F06000D4EAE33AC7ECEDF3E6194F39A2DE44C09</key>

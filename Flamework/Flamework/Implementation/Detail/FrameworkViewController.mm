@@ -267,7 +267,7 @@ enum
 	timestamp = currentTime;
     
     _application.update(deltaT);
-    _application.draw(deltaT);
+    _application.draw(deltaT,_nightView);
     
     [(EAGLView *)self.view presentFramebuffer];
 }
@@ -285,4 +285,16 @@ enum
     return NO;
 }
 
+- (IBAction)nightView:(id)sender {
+        
+//    UISwitch* apSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(72, 60, 63, 23)];
+    UISwitch *mySwitch = (UISwitch *)sender;
+    if ([mySwitch isOn]) {
+        _nightView = TRUE;
+        NSLog(@"its on!");
+    } else {
+        _nightView = FALSE;
+        NSLog(@"its off!");
+    }
+}
 @end

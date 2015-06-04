@@ -34,6 +34,7 @@ public:
     void initialize(size_t width, size_t height);
     void update(double deltaT);
     void draw(double deltaT);
+    void draw(double deltaT, bool nightView);
     void destroy();
     
     void addTouchHandler(ITouchHandler *arg);
