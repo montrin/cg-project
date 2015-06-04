@@ -106,7 +106,7 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     loadModel("quad2.obj", false, false);
     loadModel("plane.obj", true, true);
     loadModel("sky.obj", true, true);
-    loadModel("tunnel6.obj", true, true);
+    loadModel("tunnel7.obj", true, true);
     loadModel("sphere.obj", true, true);
 //  loadSound("test.mp3");
     
@@ -299,9 +299,11 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     glDisable(GL_BLEND);
     //    //Tunnel
     pushModelMatrix();
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-    useShader("Material003","tunnel6");
-    drawModel("tunnel6");
+    transformModelMatrix(vmml::create_rotation(90.0f, vmml::vec3f(0.0, 1.0, 0.0)));
+    transformModelMatrix(vmml::create_scaling(2.0));
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    useShader("Material003","tunnel7");
+    drawModel("tunnel7");
     popModelMatrix();
     
     //fbo.setActiveTexture(-1);
@@ -330,18 +332,14 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     useShader("vblur","quad2");
     drawModel("quad2");
     popModelMatrix();
-
+    
+//    fbo4.unbind();
     fbo5.bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    fbo2.bind();
     pushModelMatrix();
     
-    //check if view should render in night mode
-    if(nightMode) {
-        useShader("night","quad2");
-    }else {
-        useShader("bloom0","quad2");
-    }
+    useShader("bloom0","quad2");
     drawModel("quad2");
     popModelMatrix();
     
@@ -360,11 +358,11 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     pushModelMatrix();
     //tunnel
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-    useShader("black","tunnel6");
-    drawModel("tunnel6");
+    useShader("black","tunnel7");
+    drawModel("tunnel7");
     popModelMatrix();
-    
-    //activate scatter shader on fbo6 and blend with fbo5
+//
+//    //activate scatter shader on fbo6 and blend with fbo5
     fbo5.bind();
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD);
@@ -375,12 +373,17 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     drawModel("quad2");
     popModelMatrix();
     glDisable(GL_BLEND);
-    
-    //copy fbo5 to screen
+//
+//    //copy fbo5 to screen
     fbo5.unbind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     pushModelMatrix();
-    useShader("copy","quad2");
+    //check if view should render in night mode
+    if(nightMode) {
+        useShader("night","quad2");
+    }else {
+        useShader("copy","quad2");
+    }
     drawModel("quad2");
     popModelMatrix();
 //------------

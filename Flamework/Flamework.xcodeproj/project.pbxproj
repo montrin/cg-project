@@ -66,6 +66,11 @@
 		10C2575E1AFA400C003E5E1B /* bloom0.vert in Resources */ = {isa = PBXBuildFile; fileRef = 10C2575A1AFA400C003E5E1B /* bloom0.vert */; };
 		10C2575F1AFA400C003E5E1B /* Material003.frag in Resources */ = {isa = PBXBuildFile; fileRef = 10C2575B1AFA400C003E5E1B /* Material003.frag */; };
 		10C257601AFA400C003E5E1B /* Material003.vert in Resources */ = {isa = PBXBuildFile; fileRef = 10C2575C1AFA400C003E5E1B /* Material003.vert */; };
+		10EE2DCA1B20DDB30013AFEA /* diffuse20.png in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DC51B20DDB30013AFEA /* diffuse20.png */; };
+		10EE2DCB1B20DDB30013AFEA /* normal20.png in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DC61B20DDB30013AFEA /* normal20.png */; };
+		10EE2DCC1B20DDB30013AFEA /* specular20.png in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DC71B20DDB30013AFEA /* specular20.png */; };
+		10EE2DCD1B20DDB30013AFEA /* tunnel7.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DC81B20DDB30013AFEA /* tunnel7.mtl */; };
+		10EE2DCE1B20DDB30013AFEA /* tunnel7.obj in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DC91B20DDB30013AFEA /* tunnel7.obj */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		283D33F312AEDA3D00C06CB4 /* FrameworkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 283D33F212AEDA3D00C06CB4 /* FrameworkViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
@@ -195,6 +200,11 @@
 		10C2575A1AFA400C003E5E1B /* bloom0.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = bloom0.vert; sourceTree = "<group>"; };
 		10C2575B1AFA400C003E5E1B /* Material003.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Material003.frag; sourceTree = "<group>"; };
 		10C2575C1AFA400C003E5E1B /* Material003.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Material003.vert; sourceTree = "<group>"; };
+		10EE2DC51B20DDB30013AFEA /* diffuse20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diffuse20.png; sourceTree = "<group>"; };
+		10EE2DC61B20DDB30013AFEA /* normal20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal20.png; sourceTree = "<group>"; };
+		10EE2DC71B20DDB30013AFEA /* specular20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = specular20.png; sourceTree = "<group>"; };
+		10EE2DC81B20DDB30013AFEA /* tunnel7.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tunnel7.mtl; sourceTree = "<group>"; };
+		10EE2DC91B20DDB30013AFEA /* tunnel7.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tunnel7.obj; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Flamework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flamework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -447,6 +457,18 @@
 			path = tunnel4;
 			sourceTree = "<group>";
 		};
+		10EE2DC41B20DDB30013AFEA /* tunnel7 */ = {
+			isa = PBXGroup;
+			children = (
+				10EE2DC51B20DDB30013AFEA /* diffuse20.png */,
+				10EE2DC61B20DDB30013AFEA /* normal20.png */,
+				10EE2DC71B20DDB30013AFEA /* specular20.png */,
+				10EE2DC81B20DDB30013AFEA /* tunnel7.mtl */,
+				10EE2DC91B20DDB30013AFEA /* tunnel7.obj */,
+			);
+			path = tunnel7;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -647,6 +669,7 @@
 		F87C331F1910561A00E8A523 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				10EE2DC41B20DDB30013AFEA /* tunnel7 */,
 				1063EB3E1B1DDA66009692D6 /* plane */,
 				10A449A61B11D96D00D1D882 /* sphere */,
 				109738361B088E960034A6FD /* sky */,
@@ -849,6 +872,7 @@
 				10A1B7941AFB698D00737386 /* tunnel6.obj in Resources */,
 				F4B58BB31B20B44A0008591B /* white.frag in Resources */,
 				F8757CA019107F9800B62379 /* guy.frag in Resources */,
+				10EE2DCC1B20DDB30013AFEA /* specular20.png in Resources */,
 				105E85FF1B122176005AEECA /* normal4.png in Resources */,
 				100F5DA51AF5241900FD2257 /* normal7.png in Resources */,
 				100F5DA91AF5241900FD2257 /* uvmaptunnel3.jpg in Resources */,
@@ -887,9 +911,11 @@
 				1076CF3B1B209A8500A5947B /* night.vert in Resources */,
 				105E86021B123C2E005AEECA /* vblur.vert in Resources */,
 				100F5DA71AF5241900FD2257 /* tunnel3.mtl in Resources */,
+				10EE2DCE1B20DDB30013AFEA /* tunnel7.obj in Resources */,
 				10C257601AFA400C003E5E1B /* Material003.vert in Resources */,
 				1009D9AB1AF375E3006AFF55 /* normal5.png in Resources */,
 				105E86041B123C44005AEECA /* vblur.frag in Resources */,
+				10EE2DCA1B20DDB30013AFEA /* diffuse20.png in Resources */,
 				F8ED69F416E64F7400E6D6CA /* Default.png in Resources */,
 				100F5DA41AF5241900FD2257 /* diffuse7.png in Resources */,
 				6270BD721B14A18D0054DAA5 /* quad2.mtl in Resources */,
@@ -900,6 +926,7 @@
 				10A1B7991AFB728C00737386 /* normal6.png in Resources */,
 				F855EF351AC0D47400B32C23 /* guy.obj in Resources */,
 				F449BCAA1B07A1FC001E8F8F /* default.frag in Resources */,
+				10EE2DCB1B20DDB30013AFEA /* normal20.png in Resources */,
 				1097383C1B088E960034A6FD /* diffuse10.png in Resources */,
 				1063EB411B1DDA66009692D6 /* plane.mtl in Resources */,
 				10A1B7931AFB698D00737386 /* tunnel6.mtl in Resources */,
@@ -933,6 +960,7 @@
 				10C2575E1AFA400C003E5E1B /* bloom0.vert in Resources */,
 				105E85FE1B122176005AEECA /* diffuse4.png in Resources */,
 				F4B58BAF1B20B43B0008591B /* black.frag in Resources */,
+				10EE2DCD1B20DDB30013AFEA /* tunnel7.mtl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
