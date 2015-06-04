@@ -72,6 +72,8 @@ private:
     Framebuffer fbo2;
     Framebuffer fbo3;
     Framebuffer fbo4;
+    Framebuffer fbo5;
+    Framebuffer fbo6;
     
 };
 

@@ -114,6 +114,8 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     fbo2.generateFBO(768, 1024);
     fbo3.generateFBO(768, 1024);
     fbo4.generateFBO(768, 1024);
+    fbo5.generateFBO(768, 1024);
+    fbo6.generateFBO(768, 1024);
 }
 
 
@@ -181,7 +183,8 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             shader->setUniform("sceneTex2", 2, fbo3.getColorTexture());
             
             shader->setUniform("uTexSource2",3,fbo4.getColorTexture());
-
+            shader->setUniform("texAfterBloom", 4, fbo5.getColorTexture());
+            shader->setUniform("texBlackWhite", 5, fbo6.getColorTexture());
 
 
         }
@@ -264,6 +267,7 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     _modelMatrix = vmml::mat4f::IDENTITY;
     
     fbo.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Sphere
     //fbo.setActiveTexture(0);
 //    pushModelMatrix();
@@ -296,11 +300,13 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     //    //Tunnel
     pushModelMatrix();
     transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    useShader("Material003","tunnel6");
     drawModel("tunnel6");
     popModelMatrix();
     
     //fbo.setActiveTexture(-1);
     fbo2.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    fbo.unbind();
     //fbo.setActiveTexture(0);
     pushModelMatrix();
@@ -310,21 +316,23 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     //fbo2.setActiveTexture(-1);
 //    fbo2.unbind();
     fbo3.bind();
-//
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     pushModelMatrix();
     useShader("hblur","quad2");
     drawModel("quad2");
     popModelMatrix();
-//
+
     fbo4.bind();
-//    //fbo3.unbind();
-//    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     pushModelMatrix();
     useShader("vblur","quad2");
     drawModel("quad2");
     popModelMatrix();
-//
-    fbo4.unbind();
+
+    fbo5.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    fbo2.bind();
     pushModelMatrix();
     
@@ -336,5 +344,45 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     }
     drawModel("quad2");
     popModelMatrix();
+    
+//------scattering
+    //render scene black/white to fbo6
+    fbo6.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(1.0,1.0,1.0,1.0);
+    pushModelMatrix();
+    //sun
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
+    useShader("white","sphere");
+    drawModel("sphere");
+    popModelMatrix();
+    pushModelMatrix();
+    //tunnel
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    useShader("black","tunnel6");
+    drawModel("tunnel6");
+    popModelMatrix();
+    
+    //activate scatter shader on fbo6 and blend with fbo5
+    fbo5.bind();
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendFunc(GL_ONE, GL_ONE);
+    //glClearColor(1.0,1.0,1.0, 1.0);
+    pushModelMatrix();
+    useShader("scattering","quad2");
+    drawModel("quad2");
+    popModelMatrix();
+    glDisable(GL_BLEND);
+    
+    //copy fbo5 to screen
+    fbo5.unbind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    pushModelMatrix();
+    useShader("copy","quad2");
+    drawModel("quad2");
+    popModelMatrix();
+//------------
 
 }

@@ -86,7 +86,7 @@ void Framebuffer::resize(unsigned int fboWidth, unsigned int fboHeight) {
 
 void Framebuffer::bind() {
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0);
 }
 

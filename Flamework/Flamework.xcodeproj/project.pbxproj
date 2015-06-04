@@ -79,6 +79,14 @@
 		F449BCAA1B07A1FC001E8F8F /* default.frag in Resources */ = {isa = PBXBuildFile; fileRef = F449BCA91B07A1FC001E8F8F /* default.frag */; };
 		F449BCAC1B07A210001E8F8F /* default.vert in Resources */ = {isa = PBXBuildFile; fileRef = F449BCAB1B07A210001E8F8F /* default.vert */; };
 		F4953FEE1B01432D006E7E52 /* Framebuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F4953FEC1B01432D006E7E52 /* Framebuffer.cpp */; };
+		F4B58BAF1B20B43B0008591B /* black.frag in Resources */ = {isa = PBXBuildFile; fileRef = F4B58BAE1B20B43B0008591B /* black.frag */; };
+		F4B58BB11B20B4420008591B /* black.vert in Resources */ = {isa = PBXBuildFile; fileRef = F4B58BB01B20B4420008591B /* black.vert */; };
+		F4B58BB31B20B44A0008591B /* white.frag in Resources */ = {isa = PBXBuildFile; fileRef = F4B58BB21B20B44A0008591B /* white.frag */; };
+		F4B58BB51B20B4500008591B /* white.vert in Resources */ = {isa = PBXBuildFile; fileRef = F4B58BB41B20B4500008591B /* white.vert */; };
+		F4B58BB71B20B4600008591B /* copy.frag in Resources */ = {isa = PBXBuildFile; fileRef = F4B58BB61B20B4600008591B /* copy.frag */; };
+		F4B58BB91B20B4680008591B /* copy.vert in Resources */ = {isa = PBXBuildFile; fileRef = F4B58BB81B20B4680008591B /* copy.vert */; };
+		F4B58BBB1B20B4C60008591B /* scattering.frag in Resources */ = {isa = PBXBuildFile; fileRef = F4B58BBA1B20B4C60008591B /* scattering.frag */; };
+		F4B58BBD1B20B4CE0008591B /* scattering.vert in Resources */ = {isa = PBXBuildFile; fileRef = F4B58BBC1B20B4CE0008591B /* scattering.vert */; };
 		F814A6161716A0E000A2A910 /* obj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F814A6121716A0E000A2A910 /* obj.cpp */; };
 		F814A6171716A0E000A2A910 /* obj_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F814A6141716A0E000A2A910 /* obj_parser.cpp */; };
 		F81D4CAB16DABE50001FA5DD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81D4CAA16DABE50001FA5DD /* CoreGraphics.framework */; };
@@ -206,6 +214,14 @@
 		F449BCAB1B07A210001E8F8F /* default.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.vert; sourceTree = "<group>"; };
 		F4953FEC1B01432D006E7E52 /* Framebuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Framebuffer.cpp; sourceTree = "<group>"; };
 		F4953FED1B01432D006E7E52 /* Framebuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Framebuffer.h; path = ../Implementation/Framebuffer.h; sourceTree = "<group>"; };
+		F4B58BAE1B20B43B0008591B /* black.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = black.frag; sourceTree = "<group>"; };
+		F4B58BB01B20B4420008591B /* black.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = black.vert; sourceTree = "<group>"; };
+		F4B58BB21B20B44A0008591B /* white.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = white.frag; sourceTree = "<group>"; };
+		F4B58BB41B20B4500008591B /* white.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = white.vert; sourceTree = "<group>"; };
+		F4B58BB61B20B4600008591B /* copy.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = copy.frag; sourceTree = "<group>"; };
+		F4B58BB81B20B4680008591B /* copy.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = copy.vert; sourceTree = "<group>"; };
+		F4B58BBA1B20B4C60008591B /* scattering.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = scattering.frag; sourceTree = "<group>"; };
+		F4B58BBC1B20B4CE0008591B /* scattering.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = scattering.vert; sourceTree = "<group>"; };
 		F814A6121716A0E000A2A910 /* obj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = obj.cpp; sourceTree = "<group>"; };
 		F814A6131716A0E000A2A910 /* obj.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = obj.hpp; sourceTree = "<group>"; };
 		F814A6141716A0E000A2A910 /* obj_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = obj_parser.cpp; sourceTree = "<group>"; };
@@ -681,6 +697,14 @@
 				1063EB3C1B1DC144009692D6 /* plane.vert */,
 				1076CF381B209A6F00A5947B /* night.frag */,
 				1076CF3A1B209A8500A5947B /* night.vert */,
+				F4B58BAE1B20B43B0008591B /* black.frag */,
+				F4B58BB01B20B4420008591B /* black.vert */,
+				F4B58BB21B20B44A0008591B /* white.frag */,
+				F4B58BB41B20B4500008591B /* white.vert */,
+				F4B58BB61B20B4600008591B /* copy.frag */,
+				F4B58BB81B20B4680008591B /* copy.vert */,
+				F4B58BBA1B20B4C60008591B /* scattering.frag */,
+				F4B58BBC1B20B4CE0008591B /* scattering.vert */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -823,6 +847,7 @@
 			files = (
 				F8757CA119107FA000B62379 /* guy.vert in Resources */,
 				10A1B7941AFB698D00737386 /* tunnel6.obj in Resources */,
+				F4B58BB31B20B44A0008591B /* white.frag in Resources */,
 				F8757CA019107F9800B62379 /* guy.frag in Resources */,
 				105E85FF1B122176005AEECA /* normal4.png in Resources */,
 				100F5DA51AF5241900FD2257 /* normal7.png in Resources */,
@@ -843,15 +868,18 @@
 				F87C33491910561A00E8A523 /* test.mp3 in Resources */,
 				10C257581AFA2565003E5E1B /* tunnel4.vert in Resources */,
 				109738351B088E7C0034A6FD /* sky.vert in Resources */,
+				F4B58BB71B20B4600008591B /* copy.frag in Resources */,
 				283D33F312AEDA3D00C06CB4 /* FrameworkViewController.xib in Resources */,
 				104519A51AF273A800CD802D /* tunnel.frag in Resources */,
 				F8ED69F316E64F7400E6D6CA /* Default-568h@2x.png in Resources */,
+				F4B58BB91B20B4680008591B /* copy.vert in Resources */,
 				F89125C41AC18DFD004EB16E /* normal3.png in Resources */,
 				1009D9A91AF375E3006AFF55 /* diffuse.png in Resources */,
 				1009D9A81AF375E3006AFF55 /* diffuse.jpg in Resources */,
 				105E86001B122176005AEECA /* specular4.png in Resources */,
 				10C2575F1AFA400C003E5E1B /* Material003.frag in Resources */,
 				10C257501AFA2537003E5E1B /* tunnel4.mtl in Resources */,
+				F4B58BBB1B20B4C60008591B /* scattering.frag in Resources */,
 				1063EB3D1B1DC144009692D6 /* plane.vert in Resources */,
 				1009D9B21AF3761F006AFF55 /* tunnel2.vert in Resources */,
 				10A1B7981AFB728C00737386 /* diffuse6.png in Resources */,
@@ -881,6 +909,7 @@
 				1063EB421B1DDA66009692D6 /* plane.obj in Resources */,
 				F855EF341AC0D47400B32C23 /* guy.mtl in Resources */,
 				F8ED69F516E64F7400E6D6CA /* Default@2x.png in Resources */,
+				F4B58BB11B20B4420008591B /* black.vert in Resources */,
 				1009D9AA1AF375E3006AFF55 /* diffuse5.png in Resources */,
 				109738341B088E7C0034A6FD /* sky.frag in Resources */,
 				10A449A81B11D96D00D1D882 /* sphere.obj in Resources */,
@@ -889,6 +918,8 @@
 				10A1B79A1AFB728C00737386 /* specular6.png in Resources */,
 				1076CF391B209A6F00A5947B /* night.frag in Resources */,
 				104A53691AFA7108003F6F68 /* diffuse4.png in Resources */,
+				F4B58BB51B20B4500008591B /* white.vert in Resources */,
+				F4B58BBD1B20B4CE0008591B /* scattering.vert in Resources */,
 				10A449AC1B120EE200D1D882 /* hblur.vert in Resources */,
 				104519A61AF273A800CD802D /* tunnel.vert in Resources */,
 				109738401B088E960034A6FD /* specular10.png in Resources */,
@@ -901,6 +932,7 @@
 				1063EB381B1C5C33009692D6 /* lineartonemap.vert in Resources */,
 				10C2575E1AFA400C003E5E1B /* bloom0.vert in Resources */,
 				105E85FE1B122176005AEECA /* diffuse4.png in Resources */,
+				F4B58BAF1B20B43B0008591B /* black.frag in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
