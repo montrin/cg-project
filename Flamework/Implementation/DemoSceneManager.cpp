@@ -357,7 +357,8 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     popModelMatrix();
     pushModelMatrix();
     //tunnel
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    transformModelMatrix(vmml::create_rotation(90.0f, vmml::vec3f(0.0, 1.0, 0.0)));
+    transformModelMatrix(vmml::create_scaling(2.0));
     useShader("black","tunnel7");
     drawModel("tunnel7");
     popModelMatrix();
