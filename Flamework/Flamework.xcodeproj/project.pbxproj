@@ -71,6 +71,8 @@
 		10EE2DCC1B20DDB30013AFEA /* specular20.png in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DC71B20DDB30013AFEA /* specular20.png */; };
 		10EE2DCD1B20DDB30013AFEA /* tunnel7.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DC81B20DDB30013AFEA /* tunnel7.mtl */; };
 		10EE2DCE1B20DDB30013AFEA /* tunnel7.obj in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DC91B20DDB30013AFEA /* tunnel7.obj */; };
+		10EE2DD01B2184800013AFEA /* diffuse21.png in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DCF1B2184800013AFEA /* diffuse21.png */; };
+		10EE2DD21B2184880013AFEA /* normal21.png in Resources */ = {isa = PBXBuildFile; fileRef = 10EE2DD11B2184880013AFEA /* normal21.png */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		283D33F312AEDA3D00C06CB4 /* FrameworkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 283D33F212AEDA3D00C06CB4 /* FrameworkViewController.xib */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
@@ -205,6 +207,8 @@
 		10EE2DC71B20DDB30013AFEA /* specular20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = specular20.png; sourceTree = "<group>"; };
 		10EE2DC81B20DDB30013AFEA /* tunnel7.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tunnel7.mtl; sourceTree = "<group>"; };
 		10EE2DC91B20DDB30013AFEA /* tunnel7.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tunnel7.obj; sourceTree = "<group>"; };
+		10EE2DCF1B2184800013AFEA /* diffuse21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diffuse21.png; sourceTree = "<group>"; };
+		10EE2DD11B2184880013AFEA /* normal21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal21.png; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Flamework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flamework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -460,6 +464,8 @@
 		10EE2DC41B20DDB30013AFEA /* tunnel7 */ = {
 			isa = PBXGroup;
 			children = (
+				10EE2DD11B2184880013AFEA /* normal21.png */,
+				10EE2DCF1B2184800013AFEA /* diffuse21.png */,
 				10EE2DC51B20DDB30013AFEA /* diffuse20.png */,
 				10EE2DC61B20DDB30013AFEA /* normal20.png */,
 				10EE2DC71B20DDB30013AFEA /* specular20.png */,
@@ -899,6 +905,7 @@
 				F4B58BB91B20B4680008591B /* copy.vert in Resources */,
 				F89125C41AC18DFD004EB16E /* normal3.png in Resources */,
 				1009D9A91AF375E3006AFF55 /* diffuse.png in Resources */,
+				10EE2DD21B2184880013AFEA /* normal21.png in Resources */,
 				1009D9A81AF375E3006AFF55 /* diffuse.jpg in Resources */,
 				105E86001B122176005AEECA /* specular4.png in Resources */,
 				10C2575F1AFA400C003E5E1B /* Material003.frag in Resources */,
@@ -913,6 +920,7 @@
 				100F5DA71AF5241900FD2257 /* tunnel3.mtl in Resources */,
 				10EE2DCE1B20DDB30013AFEA /* tunnel7.obj in Resources */,
 				10C257601AFA400C003E5E1B /* Material003.vert in Resources */,
+				10EE2DD01B2184800013AFEA /* diffuse21.png in Resources */,
 				1009D9AB1AF375E3006AFF55 /* normal5.png in Resources */,
 				105E86041B123C44005AEECA /* vblur.frag in Resources */,
 				10EE2DCA1B20DDB30013AFEA /* diffuse20.png in Resources */,

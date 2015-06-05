@@ -333,8 +333,8 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     drawModel("quad2");
     popModelMatrix();
     
-//    fbo4.unbind();
-    fbo5.bind();
+    fbo4.unbind();
+//    fbo5.bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    fbo2.bind();
     pushModelMatrix();
@@ -345,6 +345,7 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     
 //------scattering
     //render scene black/white to fbo6
+<<<<<<< HEAD
     fbo6.bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(1.0,1.0,1.0,1.0);
@@ -387,6 +388,49 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     }
     drawModel("quad2");
     popModelMatrix();
+=======
+//    fbo6.bind();
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    glClearColor(1.0,1.0,1.0,1.0);
+//    pushModelMatrix();
+//    //sun
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
+//    useShader("white","sphere");
+//    drawModel("sphere");
+//    popModelMatrix();
+//    pushModelMatrix();
+//    //tunnel
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+//    useShader("black","tunnel7");
+//    drawModel("tunnel7");
+//    popModelMatrix();
+////
+////    //activate scatter shader on fbo6 and blend with fbo5
+//    fbo5.bind();
+//    glEnable(GL_BLEND);
+//    glBlendEquation(GL_FUNC_ADD);
+//    glBlendFunc(GL_ONE, GL_ONE);
+//    //glClearColor(1.0,1.0,1.0, 1.0);
+//    pushModelMatrix();
+//    useShader("scattering","quad2");
+//    drawModel("quad2");
+//    popModelMatrix();
+//    glDisable(GL_BLEND);
+////
+////    //copy fbo5 to screen
+//    fbo5.unbind();
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    pushModelMatrix();
+//    //check if view should render in night mode
+//    if(nightMode) {
+//        useShader("night","quad2");
+//    }else {
+//        useShader("copy","quad2");
+//    }
+//    drawModel("quad2");
+//    popModelMatrix();
+>>>>>>> added new texture
 //------------
 
 }

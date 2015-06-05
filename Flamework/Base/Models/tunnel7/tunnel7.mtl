@@ -9,6 +9,6 @@ Ks 0.500000 0.500000 0.500000
 #Ni 1.000000
 d 1.000000
 #illum 2
-map_Kd diffuse20.png
-map_Bump normal20.png
+map_Kd diffuse21.png
+map_Bump normal21.png
 map_Ks specular20.png
