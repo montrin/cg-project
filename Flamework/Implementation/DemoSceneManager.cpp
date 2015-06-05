@@ -161,11 +161,14 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             shader->setUniform("NormalMatrix", normalMatrix);
             
             shader->setUniform("EyePos", _eyePos);
-            
             shader->setUniform("LightPos", vmml::vec4f(2.f, 2.f, 23.0f, 0.f));
             shader->setUniform("LightDir", vmml::vec4f(-2.f, -2.f, -23.0f, 0.f));
-            
-            //                       shader->setUniform("LightPos", _eyePos);
+//            
+//            vmml::mat4f inverse;
+//            vmml::compute_inverse(vmml::mat4f(_sunPos), inverse);
+//
+//            shader->setUniform("LightPos", _sunPos);
+//            shader->setUniform("LightDir", inverse);
             shader->setUniform("Ia", vmml::vec3f(1.f));
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
@@ -248,13 +251,13 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     _time += deltaT;
     float angle = _time * .1;   // .1 radians per second
     
-    glClearColor(0.0f, 0.8f, 1.0f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     
-    glCullFace(GL_BACK);
     glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 
     Gyro *gyro = Gyro::getInstance();
     gyro->read();
@@ -335,7 +338,7 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     
 //    fbo4.unbind();
     fbo5.bind();
-  //  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    fbo2.bind();
     pushModelMatrix();
     
@@ -347,14 +350,16 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     //render scene black/white to fbo6
     fbo6.bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(1.0,1.0,1.0,1.0);
+ //   glClearColor(1.0,1.0,1.0,1.0);
     pushModelMatrix();
     //sun
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(0.0, 10.0, 10.0)));
+ //   transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(2.0, 2.0, 23.0)));
+    _sunPos = _projectionMatrix;
     useShader("white","sphere");
     drawModel("sphere");
     popModelMatrix();
+    
     pushModelMatrix();
     //tunnel
     transformModelMatrix(vmml::create_rotation(90.0f, vmml::vec3f(0.0, 1.0, 0.0)));
@@ -365,10 +370,14 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
 //
 //    //activate scatter shader on fbo6 and blend with fbo5
     fbo5.bind();
+ //   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD);
     glBlendFunc(GL_ONE, GL_ONE);
-    //glClearColor(1.0,1.0,1.0, 1.0);
+
+//    glEnable(GL_DEPTH_TEST);
+    glClearColor(1.0,1.0,1.0, 1.0);
     pushModelMatrix();
     useShader("scattering","quad2");
     drawModel("quad2");
