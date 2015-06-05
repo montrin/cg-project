@@ -1,5 +1,5 @@
 
-uniform sampler2D uTexSource1;
+uniform sampler2D texAfterBloom;
 
 varying lowp vec4 texCoordVarying;
 
