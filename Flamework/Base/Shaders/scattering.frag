@@ -16,14 +16,14 @@ const int NUM_SAMPLES = 100;
 
 void main()
 {
-    //    exposure = 0.0034;
-    //    decay = 1.0;
-    //    density = 0.84;
-    //    weight = 5.65;
+    //    exposure = 0.0034; 0.09
+    //    decay = 1.0; 4.0
+    //    density = 0.84; 0.84
+    //    weight = 5.65; 5.65
     //calculate vector from pixel to light source
     mediump vec2 deltaTexCoord = vec2( texCoordVarying.st - lightPosVarying.xy );
     //divide by # of samples and scale by control factor
-    deltaTexCoord *= 1.0 / float(NUM_SAMPLES/2) * 0.84;
+    deltaTexCoord *= 1.0 / float(NUM_SAMPLES/2) * density;
     //store initial sample
     mediump vec4 initialSample = texture2D(texBlackWhite, texCoordVarying.st);
     //set up illumination decay factor
@@ -38,18 +38,16 @@ void main()
         //retrieve sample at new location
         mediump vec4 newSample = texture2D(texBlackWhite, textCoo);
         //apply sample attenuation scale/decay factors
-        newSample *= illuminationDecay * 5.65;
+        newSample *= illuminationDecay * weight;
             //acumulate combined color
         gl_FragColor += newSample;
 
         //update exponential decay factor
-        illuminationDecay *= 4.0;
+        illuminationDecay *= decay;
     }
     //output final color with a further scale control factor
   //gl_FragColor = mix(texture2D(texBlackWhite, texCoordVarying.st),gl_FragColor,1.0);
 //    gl_FragColor *= 0.0024;
     gl_FragColor = clamp(gl_FragColor,0.0,1.0);
-    gl_FragColor *= 0.09;
-//    gl_FragColor = clamp(gl_FragColor,0.0,1.0);
-
+    gl_FragColor *= exposure;
 }

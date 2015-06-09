@@ -97,6 +97,11 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     GLint oldFBO;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
     util::log(boost::lexical_cast<std::string>(oldFBO));
+    
+    sc_exposure = 0.09;
+    sc_decay = 4.0;
+    sc_density = 0.84;
+    sc_weight = 5.65;
    
     _camera.moveCamera(_cameraForward);
 //  _camera.rotateCamera(vmml::vec3f::UNIT_Y, _cameraRotation);
@@ -188,8 +193,12 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             shader->setUniform("uTexSource2",3,fbo4.getColorTexture());
             shader->setUniform("texAfterBloom", 4, fbo5.getColorTexture());
             shader->setUniform("texBlackWhite", 5, fbo6.getColorTexture());
-
-
+            
+            //for scattering.frag
+            shader->setUniform("exposure", sc_exposure);
+            shader->setUniform("decay", sc_decay);
+            shader->setUniform("density", sc_density);
+            shader->setUniform("weight", sc_weight);
         }
         else
         {

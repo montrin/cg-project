@@ -69,6 +69,12 @@ private:
     
     ShaderPtr _shader;
     Textures _textures;
+    
+    float sc_exposure;
+    float sc_decay;
+    float sc_density;
+    float sc_weight;
+    
     Framebuffer fbo;
     Framebuffer fbo2;
     Framebuffer fbo3;
