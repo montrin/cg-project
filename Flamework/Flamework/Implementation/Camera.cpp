@@ -8,7 +8,9 @@
 
 #include "Camera.h"
 #include <cassert>
-Camera::Camera() : _view(1.0f, 0.0f, 0.0f), _position(14.0f,0.5f,-0.3f)
+Camera::Camera() : _view(0.0f, -0.002f, 1.0f), _position(4.0f,1.0f,50.0f)
+//view from behind
+//Camera::Camera() : _view(0.0f, -0.002f, -1.0f), _position(4.0f,1.0f,-190.0f)
 {
     
 }
@@ -45,8 +47,8 @@ void Camera::rotateCamera(const vmml::vec3f &axis, float rotation)
 
 void Camera::resetCamera()
 {
-    _position = vmml::vec3f(4.0f,0.5f,-0.3f);
-    _view = vmml::vec3f(1.0f, 0.0f, 0.0f);
+    _position = vmml::vec3f(0.0f,0.0f,0.0f);
+    _view = vmml::vec3f(0.0f, 0.0f, -1.0f);
 }
 
 vmml::mat4f Camera::getViewMatrix()
