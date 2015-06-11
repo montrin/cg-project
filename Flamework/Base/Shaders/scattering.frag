@@ -1,21 +1,22 @@
-
 uniform sampler2D texBlackWhite;
 
 varying lowp vec4 texCoordVarying;
 
-varying mediump vec4 posVarying;        // pos in world space
-varying mediump vec3 normalVarying;     // normal in world space
-varying mediump vec3 tangentVarying;    // tangent in world space
+varying lowp vec4 posVarying;        // pos in world space
+varying lowp vec3 normalVarying;     // normal in world space
+varying lowp vec3 tangentVarying;    // tangent in world space
 
-uniform mediump float exposure;
-uniform mediump float decay;
-uniform mediump float density;
-uniform mediump float weight;
-varying mediump vec4 lightPosVarying;
-const int NUM_SAMPLES = 100;
+uniform lowp float exposure;
+uniform lowp float decay;
+uniform lowp float density;
+uniform lowp float weight;
+uniform lowp float offsets[100];
+varying lowp vec4 lightPosVarying;
+const int NUM_SAMPLES = 20;
 
 void main()
 {
+    gl_FragColor = texture2D(texBlackWhite, texCoordVarying.st);
     //    exposure = 0.0034; 0.09
     //    decay = 1.0; 4.0
     //    density = 0.84; 0.84
@@ -39,15 +40,14 @@ void main()
         mediump vec4 newSample = texture2D(texBlackWhite, textCoo);
         //apply sample attenuation scale/decay factors
         newSample *= illuminationDecay * weight;
-            //acumulate combined color
+        //acumulate combined color
         gl_FragColor += newSample;
-
+        
         //update exponential decay factor
         illuminationDecay *= decay;
     }
     //output final color with a further scale control factor
-  //gl_FragColor = mix(texture2D(texBlackWhite, texCoordVarying.st),gl_FragColor,1.0);
-//    gl_FragColor *= 0.0024;
-    gl_FragColor = clamp(gl_FragColor,0.0,1.0);
+    //gl_FragColor = mix(texture2D(texBlackWhite, texCoordVarying.st),gl_FragColor,1.0);
+  //  gl_FragColor = clamp(gl_FragColor,0.0,1.0);
     gl_FragColor *= exposure;
 }

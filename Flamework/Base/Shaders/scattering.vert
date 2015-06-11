@@ -1,4 +1,3 @@
-
 uniform mediump mat4 ModelMatrix;
 uniform mediump vec4 LightPos;
 

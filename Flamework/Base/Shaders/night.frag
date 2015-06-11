@@ -10,8 +10,8 @@ varying mediump vec4 posVarying;        // pos in world space
 
 
 void main()
-{//texAfterBloom
-    lowp vec4 color = texture2D(uTexSource1, texCoordVarying.st);
+{//
+    lowp vec4 color = texture2D(texAfterBloom, texCoordVarying.st);
 
     // choose monochrome value
     mediump float v = max(max(color.r, color.g), color.b);

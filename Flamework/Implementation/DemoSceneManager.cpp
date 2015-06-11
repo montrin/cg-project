@@ -99,11 +99,12 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
     util::log(boost::lexical_cast<std::string>(oldFBO));
     
-    sc_exposure = 0.09;
-    sc_decay = 4.0;
-    sc_density = 0.84;
-    sc_weight = 5.65;
-   
+    sc_exposure = 0.009; //overall intensity
+    sc_decay = 1.0; //dissipation of each sample's contribution as ray progresses away from light source [0,1]
+    sc_density = 0.84; //control separation between samples
+    sc_weight = 5.65; //intensity of each sample
+    
+
     _camera.moveCamera(_cameraForward);
 //  _camera.rotateCamera(vmml::vec3f::UNIT_Y, _cameraRotation);
     _projectionMatrix = perspective(20.0f, 4.0f/3.0, -1.0f, 40.0f);
@@ -167,14 +168,12 @@ void DemoSceneManager::drawModel(const std::string &name, GLenum mode)
             shader->setUniform("NormalMatrix", normalMatrix);
             
             shader->setUniform("EyePos", _eyePos);
-            shader->setUniform("LightPos", vmml::vec4f(2.f, 2.f, 23.0f, 0.f));
-            shader->setUniform("LightDir", vmml::vec4f(-2.f, -2.f, -23.0f, 0.f));
-//            
-//            vmml::mat4f inverse;
-//            vmml::compute_inverse(vmml::mat4f(_sunPos), inverse);
-//
-//            shader->setUniform("LightPos", _sunPos);
-//            shader->setUniform("LightDir", inverse);
+//            shader->setUniform("LightPos", vmml::vec4f(2.f, 2.f, 23.0f, 0.f));
+//            shader->setUniform("LightDir", vmml::vec4f(-2.f, -2.f, -23.0f, 0.f));
+
+            shader->setUniform("LightPos", vmml::vec4f(_sunPosOnScreen, 0.f));
+            shader->setUniform("LightDir", vmml::vec4f(-2.f, -8.f, -23.0f, 0.f));
+            
             shader->setUniform("Ia", vmml::vec3f(1.f));
             shader->setUniform("Id", vmml::vec3f(1.f));
             shader->setUniform("Is", vmml::vec3f(1.f));
@@ -256,12 +255,71 @@ void DemoSceneManager::useShader(const std::string &shaderName, const std::strin
     }
 }
 
+vmml::mat4f DemoSceneManager::ortho(float near, float far) {
+    GLint viewPort[4];
+    glGetIntegerv(GL_VIEWPORT, viewPort);
+    
+    float left = 0.0f;
+    float right = left + viewPort[2];
+    float bottom = 0.0f;
+    float top = bottom + viewPort[3];
+    
+    vmml::mat4f ortho = vmml::mat4f::IDENTITY;
+    
+    for(int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
+            ortho.at(i, j) = 0.0f;
+        }
+    }
+    
+    ortho.at(0, 0) = 2.0f / (right - left);
+    ortho.at(0, 3) = -(right + left) / (right - left);
+    ortho.at(1, 1) = 2.0f / (top - bottom);
+    ortho.at(1, 3) = -(top + bottom) / (top - bottom);
+    ortho.at(2, 2) = -2.0f / (far - near);
+    ortho.at(2, 3) = -(far + near) / (far - near);
+    ortho.at(3, 3) = 1.0f;
+    
+    return ortho;
+}
+
+vmml::vec3f DemoSceneManager::objectToScreen(vmml::vec4f object) {
+    vmml::vec3f screenCoords;
+    
+    //clip space
+    vmml::vec4f homogeneous = _projectionMatrix * _viewMatrix * _modelMatrix * object;
+    vmml::vec4f dehomogenized;
+    
+    //projection divide
+    dehomogenized.x() = homogeneous.x()/homogeneous.w();
+    dehomogenized.y() = homogeneous.y()/homogeneous.w();
+    dehomogenized.z() = homogeneous.z()/homogeneous.w();
+    dehomogenized.w() = 1;
+    
+    util::log("homo- x: " + boost::lexical_cast<std::string>(homogeneous.x()) + " y: " + boost::lexical_cast<std::string>(homogeneous.y()) + " z: " + boost::lexical_cast<std::string>(homogeneous.z()) + " w: " + boost::lexical_cast<std::string>(homogeneous.w()));
+    
+    util::log("dehomo- x: " + boost::lexical_cast<std::string>(dehomogenized.x()) + " y: " + boost::lexical_cast<std::string>(dehomogenized.y()) + " z: " + boost::lexical_cast<std::string>(dehomogenized.z()));
+    
+    GLint viewPort[4];
+    glGetIntegerv(GL_VIEWPORT, viewPort);
+    
+    //apply viewport
+    screenCoords.x() = viewPort[0] + viewPort[2] * (dehomogenized.x()+1)/2;
+    screenCoords.y() = viewPort[1] + viewPort[3] * (dehomogenized.y()+1)/2;
+    //dont care about depth
+    screenCoords.z() = 0;
+    
+    util::log("screen- x: " + boost::lexical_cast<std::string>(screenCoords.x()) + " y: " + boost::lexical_cast<std::string>(screenCoords.y()) + " z: " + boost::lexical_cast<std::string>(screenCoords.z()));
+    
+    return screenCoords;
+}
+
 void DemoSceneManager::draw(double deltaT, bool nightMode)
 {
     _time += deltaT;
     float angle = _time * .1;   // .1 radians per second
     
-    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -279,12 +337,6 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     _cameraRotation = gyro->getRoll() * 0.05;
     _camera.rotateCamera(vmml::vec3f(0.0,1.0,0.0), _cameraRotation);
     _viewMatrix = _camera.getViewMatrix();
-
-//    if (gyro->isYaw() > 0) {
-//    }else if(gyro->isYaw() < 0) {
-//        _camera.rotateCamera(vmml::vec3f(0.0,1.0,0.0), -_cameraRotation);
-//        _viewMatrix = _camera.getViewMatrix();
-//    }
 
     _modelMatrix = vmml::mat4f::IDENTITY;
     
@@ -317,51 +369,50 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     popModelMatrix();
     
     
-    //fbo2.bind();
-    fbo.unbind();
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    glDisable(GL_BLEND);
-    //    glEnable(GL_CULL_FACE);
-    //    glCullFace(GL_BACK);
+    fbo2.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     pushModelMatrix();
-    useShader("night","quad2");
+    useShader("bloom1","quad2");
     drawModel("quad2");
     popModelMatrix();
 
-//    fbo3.bind();
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    pushModelMatrix();
-//    useShader("hblur","quad2");
-//    drawModel("quad2");
-//    popModelMatrix();
+    fbo3.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    pushModelMatrix();
+    useShader("hblur","quad2");
+    drawModel("quad2");
+    popModelMatrix();
     
-//    fbo4.bind();
-//    fbo3.unbind();
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    pushModelMatrix();
-//    useShader("vblur","quad2");
-//    drawModel("quad2");
-//    popModelMatrix();
+    fbo4.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    pushModelMatrix();
+    useShader("vblur","quad2");
+    drawModel("quad2");
+    popModelMatrix();
     
-////    fbo5.bind();
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-////    //    fbo2.bind();
-//    pushModelMatrix();
-//    useShader("bloom0","quad2");
-//    drawModel("quad2");
-//    popModelMatrix();
-//
-//    //------scattering
-//    //render scene black/white to fbo6
+    fbo5.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    pushModelMatrix();
+    useShader("bloom0","quad2");
+    drawModel("quad2");
+    popModelMatrix();
+
+    //------scattering
+    //render scene black/white to fbo6
 //    fbo6.bind();
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    //   glClearColor(1.0,1.0,1.0,1.0);
 //    pushModelMatrix();
 //    //sun
 //    //   transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-//    transformModelMatrix(vmml::create_translation(vmml::vec3f(2.0, 2.0, 23.0)));
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(2.0, 8.0, 23.0)));
 //    _sunPos = _projectionMatrix;
 //    useShader("white","sphere");
+//    drawModel("sphere");
+//    popModelMatrix();
+//    
+//    pushModelMatrix();
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(30.0, 6.0, 5.0)));
+//    useShader("black", "sphere");
 //    drawModel("sphere");
 //    popModelMatrix();
 //    
@@ -372,35 +423,49 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
 //    useShader("black","tunnel8");
 //    drawModel("tunnel8");
 //    popModelMatrix();
-//    //
-//    //    //activate scatter shader on fbo6 and blend with fbo5
+    
+    //activate scatter shader on fbo6 and blend with fbo5
+    
 //    fbo5.bind();
-//    //   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    glDisable(GL_DEPTH_TEST);
+//    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    //glDisable(GL_DEPTH_TEST);
 //    glEnable(GL_BLEND);
 //    glBlendEquation(GL_FUNC_ADD);
 //    glBlendFunc(GL_ONE, GL_ONE);
 //    
-//    //    glEnable(GL_DEPTH_TEST);
-//    glClearColor(1.0,1.0,1.0, 1.0);
+//    //convert sun position
+//    _projectionMatrix = ortho(-1.0f, 100.0f);
+//    _sunPosOnScreen = objectToScreen(vmml::vec4f(2.0, 8.0, 23.0, 1));
+//    _sunPosOnScreen.clamp();
+//    //change to orthographic projection
+//    
 //    pushModelMatrix();
 //    useShader("scattering","quad2");
 //    drawModel("quad2");
 //    popModelMatrix();
 //    glDisable(GL_BLEND);
+//    
+//    //change back to perspective projection
+//    _projectionMatrix = perspective(20.0f, 4.0f/3.0, -1.0f, 40.0f);
+//    
 //    ////
 //    ////    //copy fbo5 to screen
 //    fbo5.unbind();
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    pushModelMatrix();
-//    //check if view should render in night mode
-//    if(nightMode) {
-//        useShader("night","quad2");
-//    }else {
-//        useShader("copy","quad2");
-//    }
-//    drawModel("quad2");
-//    popModelMatrix();
     
+    pushModelMatrix();
+    //check if view should render in night mode
+    
+    fbo5.unbind();
+    if(nightMode) {
+        useShader("night","quad2");
+    
+    }else {
+        useShader("copy","quad2");
+    }
+    drawModel("quad2");
+    popModelMatrix();
+    
+    
+
 
 }

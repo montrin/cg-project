@@ -46,6 +46,9 @@ public:
     void transformModelMatrix(const vmml::mat4f &t);
     vmml::mat4f perspective(float fov, float aspect, float near, float far);
     void useShader(const std::string &shaderName, const std::string &modelName);
+
+    vmml::mat4f ortho(float near, float far);
+    vmml::vec3f objectToScreen(vmml::vec4f object);
     
 private:
     double _time;
@@ -83,6 +86,7 @@ private:
     Framebuffer fbo5;
     Framebuffer fbo6;
     
+    vmml::vec3f _sunPosOnScreen;
 };
 
 

@@ -18,7 +18,7 @@ void main()
     if(color.r<=0.3 && color.g<=0.3 && color.b<=0.3){
         color = vec4(0.0,0.0,0.0,1.0);
     }else{
-        color = color + vec4(vec3(0.3),1.0);
+        color = color + vec4(vec3(0.3),0.0);
     }
     
     gl_FragColor =  color;//*sourceColor;
