@@ -66,6 +66,7 @@ private:
     float _forwardSpeed;
     float _cameraForward;
     float _cameraRotation;
+    float _cameraRotationDegree;
     
     ShaderPtr _shader;
     Textures _textures;

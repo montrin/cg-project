@@ -287,7 +287,6 @@ enum
 
 - (IBAction)nightView:(id)sender {
         
-//    UISwitch* apSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(72, 60, 63, 23)];
     UISwitch *mySwitch = (UISwitch *)sender;
     if ([mySwitch isOn]) {
         _nightView = TRUE;

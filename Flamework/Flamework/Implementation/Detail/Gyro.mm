@@ -19,10 +19,12 @@ static Gyro *instance = NULL;
 @interface GyroImpl:CMMotionManager
 {
     CMMotionManager* _motionManager;
+        CMMotionManager* _motionManager2;
     NSTimer* _timer;
     CMGyroData *_gyroData;
     
     double _pitch, _yaw, _roll;
+    CMRotationMatrix _rotationMatrix;
 }
 
 - (double)getPitch;
@@ -36,8 +38,11 @@ static Gyro *instance = NULL;
 -(id) init
 {
     _motionManager = [[CMMotionManager alloc] init];
+//    _motionManager.showsDeviceMovementDisplay = YES;
     _motionManager.deviceMotionUpdateInterval = 1.0f/60.0f;
-    [_motionManager startDeviceMotionUpdates];
+   [_motionManager startDeviceMotionUpdates];
+//    [_motionManager startDeviceMotionUpdatesUsingReferenceFrame:CMAttitudeReferenceFrameXArbitraryCorrectedZVertical];
+
     _timer = [NSTimer scheduledTimerWithTimeInterval:(1.0f/60.0f) target:self selector:@selector(read) userInfo:nil repeats:YES];
     
     if([_motionManager isGyroAvailable]) {
@@ -57,11 +62,10 @@ static Gyro *instance = NULL;
     CMAttitude *attitude;
     CMDeviceMotion *motion = _motionManager.deviceMotion;
     attitude = motion.attitude;
-    
+
     _pitch = attitude.pitch;
     _roll = attitude.roll;
     _yaw = attitude.yaw;
-    
 }
 
 - (double)getPitch
@@ -126,4 +130,18 @@ float Gyro::getRoll()
     return [_impl->wrapped getRoll];
 }
 
-
+float Gyro::isYaw() {
+    
+    float yaw_degrees = getRoll() * 180 / M_PI;
+    
+    NSLog(@"pitch: %f, roll: %f, yaw: %f", getPitch(), getRoll() * 180 / M_PI, getYaw() * 180 / M_PI);
+    if (yaw_degrees > 5.0f ) {
+        return 1.0f;
+    }
+    
+    if (yaw_degrees < -5.0f) {
+        return -1.0f;
+    }
+    
+    return 0;
+}

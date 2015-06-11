@@ -92,7 +92,8 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     
     _cameraForward = 0.0f;
     _forwardSpeed = 1.0f;
-    _cameraRotation = M_PI_F;
+    _cameraRotationDegree = 45.0f;
+    _cameraRotation = 0.2f;
     
     GLint oldFBO;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO);
@@ -109,8 +110,8 @@ void DemoSceneManager::initialize(size_t width, size_t height)
 //  _projectionMatrix = vmml::mat4f::IDENTITY;
     
     loadModel("quad2.obj", false, false);
-    loadModel("plane.obj", true, true);
-    loadModel("tunnel8.obj", false, false);
+    loadModel("plane.obj", false, false);
+    loadModel("tunnel8.obj", true, false);
     loadModel("endview.obj", false, true);
     loadModel("sphere.obj", true, true);
 //  loadSound("test.mp3");
@@ -260,10 +261,12 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     _time += deltaT;
     float angle = _time * .1;   // .1 radians per second
     
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
-//    glDepthFunc(GL_LEQUAL);
+    glDepthFunc(GL_LEQUAL);
+//    glEnable(GL_CULL_FACE);
+//    glCullFace(GL_BACK);
     
     Gyro *gyro = Gyro::getInstance();
     gyro->read();
@@ -273,10 +276,38 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     _camera.moveCamera(_cameraForward);
     _viewMatrix = _camera.getViewMatrix();
     
+    _cameraRotation = gyro->getRoll() * 0.05;
+    _camera.rotateCamera(vmml::vec3f(0.0,1.0,0.0), _cameraRotation);
+    _viewMatrix = _camera.getViewMatrix();
+
+//    if (gyro->isYaw() > 0) {
+//    }else if(gyro->isYaw() < 0) {
+//        _camera.rotateCamera(vmml::vec3f(0.0,1.0,0.0), -_cameraRotation);
+//        _viewMatrix = _camera.getViewMatrix();
+//    }
+
     _modelMatrix = vmml::mat4f::IDENTITY;
     
-//    fbo.bind();
-    
+    fbo.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //end view
+    pushModelMatrix();
+    transformModelMatrix(vmml::create_scaling(1.5));
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    drawModel("endview");
+    popModelMatrix();
+
+    //eye adaption simulation
+    pushModelMatrix();
+    glEnable( GL_BLEND );
+    glBlendEquation( GL_FUNC_ADD );
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    transformModelMatrix(vmml::create_scaling(1.5));
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    useShader("plane","plane");
+    drawModel("plane");
+    popModelMatrix();
+    glDisable(GL_BLEND);
     //    //Tunnel
     pushModelMatrix();
     transformModelMatrix(vmml::create_scaling(1.5));
@@ -285,53 +316,41 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     drawModel("tunnel8");
     popModelMatrix();
     
-    //end view
+    
+    //fbo2.bind();
+    fbo.unbind();
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    glDisable(GL_BLEND);
+    //    glEnable(GL_CULL_FACE);
+    //    glCullFace(GL_BACK);
     pushModelMatrix();
-//    transformModelMatrix(vmml::create_rotation(90.0f, vmml::vec3f(1.0,0.0,0.0)));
-    transformModelMatrix(vmml::create_scaling(1.5));
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-
-    drawModel("endview");
+    useShader("night","quad2");
+    drawModel("quad2");
     popModelMatrix();
 
-    
-//    //fbo.setActiveTexture(-1);
-//    fbo2.bind();
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    //    fbo.unbind();
-//    //fbo.setActiveTexture(0);
-//    pushModelMatrix();
-//    useShader("bloom1","quad2");
-//    drawModel("quad2");
-//    popModelMatrix();
-//    //fbo2.setActiveTexture(-1);
-//    //    fbo2.unbind();
 //    fbo3.bind();
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    
 //    pushModelMatrix();
 //    useShader("hblur","quad2");
 //    drawModel("quad2");
 //    popModelMatrix();
-//    
+    
 //    fbo4.bind();
+//    fbo3.unbind();
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    
 //    pushModelMatrix();
 //    useShader("vblur","quad2");
 //    drawModel("quad2");
 //    popModelMatrix();
-//    
-//    //    fbo4.unbind();
-//    fbo5.bind();
+    
+////    fbo5.bind();
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    //    fbo2.bind();
+////    //    fbo2.bind();
 //    pushModelMatrix();
-//    
 //    useShader("bloom0","quad2");
 //    drawModel("quad2");
 //    popModelMatrix();
-//    
+//
 //    //------scattering
 //    //render scene black/white to fbo6
 //    fbo6.bind();
@@ -382,4 +401,6 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
 //    }
 //    drawModel("quad2");
 //    popModelMatrix();
+    
+
 }

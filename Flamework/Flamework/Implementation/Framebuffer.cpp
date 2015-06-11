@@ -35,7 +35,7 @@ void Framebuffer::generateColorTexture(unsigned int fboWidth, unsigned int fboHe
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F_EXT, fboWidth, fboHeight, 0, GL_RGBA16F_EXT, GL_HALF_FLOAT_OES, NULL/*image initially empty*/);
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fboWidth, fboHeight, 0, GL_RGBA, GL_HALF_FLOAT_OES, NULL/*image initially empty*/);
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fboWidth, fboHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0/*image initially empty*/);
     glBindTexture(GL_TEXTURE_2D, 0);
 
 #ifndef USE_GL_ES2
@@ -65,7 +65,6 @@ void Framebuffer::generateFBO(unsigned int fboWidth, unsigned int fboHeight) {
 
 //  attach to framebuffer/renderbuffer
 //    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0 /*-->mipmap level 0*/);
-//  glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthTexture);
     
     //Check for FBO completeness
 
@@ -88,6 +87,8 @@ void Framebuffer::bind() {
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthTexture);
+    
 }
 
 void Framebuffer::setActiveTexture(int iBuffer){

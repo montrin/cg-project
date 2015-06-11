@@ -42,13 +42,18 @@ void Camera::moveCamera(const float camSpeed)
 
 void Camera::rotateCamera(const vmml::vec3f &axis, float rotation)
 {
-    _view = vmml::mat3f(vmml::create_rotation(-rotation, axis));
+//    _view = vmml::mat3f(vmml::create_rotation(-2.0f, axis));
+//    _view =* vmml::mat3f(vmml::create_rotation(-rotation, vmml::vec3f(1.0,0.0,0.0)));
+    
+    _rotation = _rotation*vmml::create_rotation(rotation, axis);
+    _view = vmml::vec3f(_rotation);
+
 }
 
 void Camera::resetCamera()
 {
-    _position = vmml::vec3f(0.0f,0.0f,0.0f);
-    _view = vmml::vec3f(0.0f, 0.0f, -1.0f);
+    _position = vmml::vec3f(4.0f,1.0f,50.0f);
+    _view = vmml::vec3f(0.0f, -0.002f, 1.0f);
 }
 
 vmml::mat4f Camera::getViewMatrix()

@@ -14,7 +14,7 @@ uniform mediump float opacity;
 const mediump vec3 DiffuseLight = vec3(0.15, 0.05, 0.0);
 const mediump vec3 RimColor = vec3(0.2, 0.2, 0.2);
 const mediump vec3 fogColor = vec3(1.0, 1.0,1.0);
-const mediump float FogDensity = 0.5;
+const mediump float FogDensity = 0.2;
 const int depthFog=1;
 const int fogSelector=2;
 mediump float opacityFactor=0.1;

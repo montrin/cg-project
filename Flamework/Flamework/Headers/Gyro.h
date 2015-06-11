@@ -27,7 +27,8 @@ public:
     float   getPitch();
     float   getYaw();
     float   getRoll();
-
+    
+    float isYaw();
 private:
     
     Gyro();

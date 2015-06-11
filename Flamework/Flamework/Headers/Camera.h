@@ -32,6 +32,8 @@ private:
     
     vmml::vec3f _position, _view;
     float _speed;
+    vmml::mat4f _rotation = vmml::mat4f::IDENTITY;
+
 };
 
 typedef std::shared_ptr<Camera> CameraPtr;
