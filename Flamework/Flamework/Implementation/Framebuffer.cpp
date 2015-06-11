@@ -67,7 +67,11 @@ void Framebuffer::generateFBO(unsigned int fboWidth, unsigned int fboHeight) {
 //    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture, 0 /*-->mipmap level 0*/);
     
     //Check for FBO completeness
-
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    if(GL_FRAMEBUFFER_COMPLETE != status) {
+        std::fprintf(stderr, "Error: incomplete framebuffer\n");
+        std::terminate();
+    }
 }
 
 GLuint Framebuffer::getColorTexture() {

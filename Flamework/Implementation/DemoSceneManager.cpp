@@ -123,6 +123,8 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     fbo4.generateFBO(768, 1024);
     fbo5.generateFBO(768, 1024);
     fbo6.generateFBO(768, 1024);
+    
+    mode = 2; //0 --> plain, 1 --> bloom, 2 --> scattering
 }
 
 
@@ -340,26 +342,29 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
 
     _modelMatrix = vmml::mat4f::IDENTITY;
     
-    fbo.bind();
+    if(mode == 0) {
+        fbo.unbind();
+    } else {
+        fbo.bind();
+    }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //end view
     pushModelMatrix();
     transformModelMatrix(vmml::create_scaling(1.5));
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
     drawModel("endview");
     popModelMatrix();
-
+    
     //eye adaption simulation
-    pushModelMatrix();
-    glEnable( GL_BLEND );
-    glBlendEquation( GL_FUNC_ADD );
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    transformModelMatrix(vmml::create_scaling(1.5));
-    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-    useShader("plane","plane");
-    drawModel("plane");
-    popModelMatrix();
-    glDisable(GL_BLEND);
+//    pushModelMatrix();
+//    glEnable( GL_BLEND );
+//    glBlendEquation( GL_FUNC_ADD );
+//    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+//    transformModelMatrix(vmml::create_scaling(1.5));
+//    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+//    useShader("plane","plane");
+//    drawModel("plane");
+//    popModelMatrix();
+//    glDisable(GL_BLEND);
     //    //Tunnel
     pushModelMatrix();
     transformModelMatrix(vmml::create_scaling(1.5));
@@ -368,6 +373,7 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     drawModel("tunnel8");
     popModelMatrix();
     
+    if(mode == 1) {
     
     fbo2.bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -390,72 +396,68 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     drawModel("quad2");
     popModelMatrix();
     
-    fbo5.bind();
+    fbo4.unbind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     pushModelMatrix();
     useShader("bloom0","quad2");
     drawModel("quad2");
     popModelMatrix();
+    
+    }
+    
+    if(mode == 2) {
 
     //------scattering
     //render scene black/white to fbo6
-//    fbo6.bind();
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    pushModelMatrix();
-//    //sun
-//    //   transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-//    transformModelMatrix(vmml::create_translation(vmml::vec3f(2.0, 8.0, 23.0)));
-//    _sunPos = _projectionMatrix;
-//    useShader("white","sphere");
-//    drawModel("sphere");
-//    popModelMatrix();
-//    
-//    pushModelMatrix();
-//    transformModelMatrix(vmml::create_translation(vmml::vec3f(30.0, 6.0, 5.0)));
-//    useShader("black", "sphere");
-//    drawModel("sphere");
-//    popModelMatrix();
-//    
-//    pushModelMatrix();
-//    //tunnel
-//    transformModelMatrix(vmml::create_scaling(1.5));
-//    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-//    useShader("black","tunnel8");
-//    drawModel("tunnel8");
-//    popModelMatrix();
+    fbo6.bind();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDisable(GL_DEPTH_TEST);
+    glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+    pushModelMatrix();
+    //sun
+    //   transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(2.0, 8.0, 23.0)));
+    _sunPos = _projectionMatrix;
+    useShader("white","sphere");
+    drawModel("sphere");
+    popModelMatrix();
+    
+    pushModelMatrix();
+    //tunnel
+    transformModelMatrix(vmml::create_scaling(1.5));
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    useShader("black","tunnel8");
+    drawModel("tunnel8");
+    popModelMatrix();
     
     //activate scatter shader on fbo6 and blend with fbo5
     
-//    fbo5.bind();
-//    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    //glDisable(GL_DEPTH_TEST);
-//    glEnable(GL_BLEND);
-//    glBlendEquation(GL_FUNC_ADD);
-//    glBlendFunc(GL_ONE, GL_ONE);
-//    
-//    //convert sun position
-//    _projectionMatrix = ortho(-1.0f, 100.0f);
-//    _sunPosOnScreen = objectToScreen(vmml::vec4f(2.0, 8.0, 23.0, 1));
-//    _sunPosOnScreen.clamp();
-//    //change to orthographic projection
-//    
-//    pushModelMatrix();
-//    useShader("scattering","quad2");
-//    drawModel("quad2");
-//    popModelMatrix();
-//    glDisable(GL_BLEND);
-//    
-//    //change back to perspective projection
-//    _projectionMatrix = perspective(20.0f, 4.0f/3.0, -1.0f, 40.0f);
-//    
-//    ////
-//    ////    //copy fbo5 to screen
-//    fbo5.unbind();
+    fbo.bind();
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glDisable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    glBlendFunc(GL_ONE, GL_ONE);
+    
+    //convert sun position
+    _projectionMatrix = ortho(-1.0f, 100.0f);
+    _sunPosOnScreen = objectToScreen(vmml::vec4f(2.0, 8.0, 23.0, 1));
+    _sunPosOnScreen.clamp();
+    //change to orthographic projection
     
     pushModelMatrix();
+    useShader("scattering","quad2");
+    drawModel("quad2");
+    glDisable(GL_BLEND);
+    
+    //change back to perspective projection
+    _projectionMatrix = perspective(20.0f, 4.0f/3.0, -1.0f, 40.0f);
+    popModelMatrix();
+
     //check if view should render in night mode
     
-    fbo5.unbind();
+    fbo.unbind();
+    pushModelMatrix();
     if(nightMode) {
         useShader("night","quad2");
     
@@ -464,6 +466,8 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     }
     drawModel("quad2");
     popModelMatrix();
+    
+    }
     
     
 

@@ -79,6 +79,8 @@ private:
     float sc_density;
     float sc_weight;
     
+    int mode;
+    
     Framebuffer fbo;
     Framebuffer fbo2;
     Framebuffer fbo3;
