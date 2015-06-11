@@ -45,7 +45,10 @@ public:
     void popModelMatrix();
     void transformModelMatrix(const vmml::mat4f &t);
     vmml::mat4f perspective(float fov, float aspect, float near, float far);
+    vmml::mat4f ortho(float near, float far);
     void useShader(const std::string &shaderName, const std::string &modelName);
+    vmml::vec3f objectToScreen(vmml::vec4f object);
+    void generateOffsets();
     
 private:
     double _time;
@@ -56,6 +59,8 @@ private:
     vmml::vec2f _lScale;
     vmml::vec4f _eyePos;
     vmml::mat4f _sunPos;
+    vmml::vec3f _sunPosOnScreen;
+    
     
     MatrixStack _modelMatrixStack;
     vmml::mat4f _modelMatrix;
@@ -74,6 +79,8 @@ private:
     float sc_decay;
     float sc_density;
     float sc_weight;
+    
+    float offsets[100];
     
     Framebuffer fbo;
     Framebuffer fbo2;

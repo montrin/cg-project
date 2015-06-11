@@ -11,6 +11,7 @@ uniform mediump float exposure;
 uniform mediump float decay;
 uniform mediump float density;
 uniform mediump float weight;
+uniform mediump float offsets[100];
 varying mediump vec4 lightPosVarying;
 const int NUM_SAMPLES = 100;
 
@@ -47,7 +48,6 @@ void main()
     }
     //output final color with a further scale control factor
   //gl_FragColor = mix(texture2D(texBlackWhite, texCoordVarying.st),gl_FragColor,1.0);
-//    gl_FragColor *= 0.0024;
-    gl_FragColor = clamp(gl_FragColor,0.0,1.0);
+    //gl_FragColor = clamp(gl_FragColor,0.0,1.0);
     gl_FragColor *= exposure;
 }
