@@ -267,7 +267,7 @@ enum
 	timestamp = currentTime;
     
     _application.update(deltaT);
-    _application.draw(deltaT,_nightView);
+    _application.draw(deltaT,_nightView,_modePostProcessing);
     
     [(EAGLView *)self.view presentFramebuffer];
 }
@@ -285,15 +285,54 @@ enum
     return NO;
 }
 
-- (IBAction)nightView:(id)sender {
-        
-    UISwitch *mySwitch = (UISwitch *)sender;
-    if ([mySwitch isOn]) {
-        _nightView = TRUE;
-        NSLog(@"its on!");
-    } else {
-        _nightView = FALSE;
-        NSLog(@"its off!");
+//- (IBAction)nightView:(id)sender {
+//        
+//    UISwitch *mySwitch = (UISwitch *)sender;
+//    if ([mySwitch isOn]) {
+//        _nightView = TRUE;
+//        _modePostProcessing = 2;
+//        NSLog(@"its on!");
+//    } else {
+//        _nightView = FALSE;
+//        NSLog(@"its off!");
+//    }
+//}
+
+- (IBAction)mode0:(UIButton *)sender {
+    UIButton *myMode = (UIButton *)sender;
+    
+    if ([myMode isEnabled]) {
+        _modePostProcessing = 0;
+        _nightView = FALSE;        
     }
 }
+- (IBAction)mode1:(UIButton *)sender {
+    
+    UIButton *myMode = (UIButton *)sender;
+    
+    if ([myMode isEnabled]) {
+        _modePostProcessing = 1;
+        _nightView = FALSE;
+    }
+    
+}
+- (IBAction)mode2:(UIButton *)sender {
+    UIButton *myMode = (UIButton *)sender;
+    
+    if ([myMode isEnabled]) {
+        _modePostProcessing = 2;
+        _nightView = FALSE;
+    }
+    
+}
+- (IBAction)night:(UIButton *)sender {
+    UIButton *myMode = (UIButton *)sender;
+    
+    if ([myMode isEnabled]) {
+        _modePostProcessing = 2;
+        _nightView = TRUE;
+    }
+
+}
+
 @end

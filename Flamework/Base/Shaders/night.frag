@@ -1,5 +1,4 @@
 
-uniform sampler2D texAfterBloom;
 uniform sampler2D uTexSource1;
 
 varying lowp vec4 texCoordVarying;
@@ -11,7 +10,7 @@ varying mediump vec4 posVarying;        // pos in world space
 
 void main()
 {//
-    lowp vec4 color = texture2D(texAfterBloom, texCoordVarying.st);
+    lowp vec4 color = texture2D(uTexSource1, texCoordVarying.st);
 
     // choose monochrome value
     mediump float v = max(max(color.r, color.g), color.b);

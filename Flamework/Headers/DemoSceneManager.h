@@ -36,7 +36,7 @@ public:
     
     virtual void initialize(size_t width, size_t height);
 //    virtual void draw(double deltaT);
-    virtual void draw(double deltaT, bool nightMode);
+    virtual void draw(double deltaT, bool nightMode, int mode);
     
     void drawModel(const std::string &name, GLenum mode = GL_TRIANGLES);
     void drawModel(const std::string &name,  const std::string &textureName, GLenum mode = GL_TRIANGLES);
@@ -79,7 +79,7 @@ private:
     float sc_density;
     float sc_weight;
     
-    int mode;
+//    int mode;
     
     Framebuffer fbo;
     Framebuffer fbo2;

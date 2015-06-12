@@ -27,6 +27,8 @@
     int _lPosY;
     
     BOOL _nightView;
+    
+    int _modePostProcessing;
 }
 
 - (IBAction)nightView:(id)sender;

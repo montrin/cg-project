@@ -124,7 +124,7 @@ void DemoSceneManager::initialize(size_t width, size_t height)
     fbo5.generateFBO(768, 1024);
     fbo6.generateFBO(768, 1024);
     
-    mode = 2; //0 --> plain, 1 --> bloom, 2 --> scattering
+   // mode = 2; //0 --> plain, 1 --> bloom, 2 --> scattering
 }
 
 
@@ -316,7 +316,7 @@ vmml::vec3f DemoSceneManager::objectToScreen(vmml::vec4f object) {
     return screenCoords;
 }
 
-void DemoSceneManager::draw(double deltaT, bool nightMode)
+void DemoSceneManager::draw(double deltaT, bool nightMode, int mode)
 {
     _time += deltaT;
     float angle = _time * .1;   // .1 radians per second
@@ -355,16 +355,17 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     popModelMatrix();
     
     //eye adaption simulation
-//    pushModelMatrix();
-//    glEnable( GL_BLEND );
-//    glBlendEquation( GL_FUNC_ADD );
-//    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-//    transformModelMatrix(vmml::create_scaling(1.5));
-//    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
-//    useShader("plane","plane");
-//    drawModel("plane");
-//    popModelMatrix();
-//    glDisable(GL_BLEND);
+    pushModelMatrix();
+    glEnable( GL_BLEND );
+    glBlendEquation( GL_FUNC_ADD );
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    transformModelMatrix(vmml::create_scaling(1.5));
+    transformModelMatrix(vmml::create_translation(vmml::vec3f(_scrolling.x(), -_scrolling.y(), 0)));
+    useShader("plane","plane");
+    drawModel("plane");
+    popModelMatrix();
+    glDisable(GL_BLEND);
+    
     //    //Tunnel
     pushModelMatrix();
     transformModelMatrix(vmml::create_scaling(1.5));
@@ -399,6 +400,7 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     fbo4.unbind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     pushModelMatrix();
+
     useShader("bloom0","quad2");
     drawModel("quad2");
     popModelMatrix();
@@ -432,44 +434,48 @@ void DemoSceneManager::draw(double deltaT, bool nightMode)
     
     //activate scatter shader on fbo6 and blend with fbo5
     
-    fbo.bind();
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //glDisable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendEquation(GL_FUNC_ADD);
-    glBlendFunc(GL_ONE, GL_ONE);
-    
-    //convert sun position
-    _projectionMatrix = ortho(-1.0f, 100.0f);
-    _sunPosOnScreen = objectToScreen(vmml::vec4f(2.0, 8.0, 23.0, 1));
-    _sunPosOnScreen.clamp();
-    //change to orthographic projection
-    
-    pushModelMatrix();
-    useShader("scattering","quad2");
-    drawModel("quad2");
-    glDisable(GL_BLEND);
-    
-    //change back to perspective projection
-    _projectionMatrix = perspective(20.0f, 4.0f/3.0, -1.0f, 40.0f);
-    popModelMatrix();
-
-    //check if view should render in night mode
-    
-    fbo.unbind();
-    pushModelMatrix();
+        
+    //decision if scattering or night mode
     if(nightMode) {
+        fbo.unbind();
+        pushModelMatrix();
         useShader("night","quad2");
-    
-    }else {
+        drawModel("quad2");
+        popModelMatrix();
+    } else {
+        
+        fbo.bind();
+        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        //glDisable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendEquation(GL_FUNC_ADD);
+        glBlendFunc(GL_ONE, GL_ONE);
+        
+        //convert sun position
+        _projectionMatrix = ortho(-1.0f, 100.0f);
+        _sunPosOnScreen = objectToScreen(vmml::vec4f(2.0, 8.0, 23.0, 1));
+        _sunPosOnScreen.clamp();
+        //change to orthographic projection
+        
+        pushModelMatrix();
+        useShader("scattering","quad2");
+        drawModel("quad2");
+        glDisable(GL_BLEND);
+        
+        //change back to perspective projection
+        _projectionMatrix = perspective(20.0f, 4.0f/3.0, -1.0f, 40.0f);
+        popModelMatrix();
+        
+        //check if view should render in night mode
+        
+        fbo.unbind();
+        pushModelMatrix();
         useShader("copy","quad2");
+        drawModel("quad2");
+        popModelMatrix();
+        
     }
-    drawModel("quad2");
-    popModelMatrix();
     
     }
-    
-    
-
 
 }
